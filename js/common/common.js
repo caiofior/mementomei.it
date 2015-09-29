@@ -108,3 +108,20 @@ function getDatatableMetadata(el) {
    });
    return metadata;
 }
+selected="";
+if (+$(".logo h1 a ").attr("href") == currentPage) {
+    selected="selected='selected' "
+}
+selHtml = "<select id='selNav'><option "+selected+"value='"+$(".logo h1 a ").attr("href")+"'>Home</option>";
+$(".navigation ul li").each(function (id,el) {
+    selected="";
+    if ($(el).children("a").attr("href") == currentPage) {
+        selected="selected='selected' "
+    }
+    selHtml += "<option "+selected+"value='"+$(el).children("a").attr("href")+"'>"+$(el).children("a").text()+"</option>";
+});
+selHtml += "</select>";
+$(".navigation ul").append(selHtml);
+$("#selNav").change(function() {
+  window.location = $(this).find("option:selected").val();
+});

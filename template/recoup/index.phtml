@@ -9,74 +9,43 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <head>
 <title><?php echo $GLOBALS['db']->config->siteName;?></title>
 <link href="<?php echo $GLOBALS['db']->config->staticUrl.$GLOBALS['template']->getUrlModifyTimestamp('template/recoup/css/bootstrap.css');?>" rel="stylesheet" type="text/css" media="all">
-<link href="<?php echo $GLOBALS['db']->config->staticUrl.$GLOBALS['template']->getUrlModifyTimestamp('template/recoup/css/style.css');?>" rel="stylesheet" type="text/css" media="all" />
+<link href="<?php echo $GLOBALS['db']->config->staticUrl.$GLOBALS['template']->getUrlModifyTimestamp('template/recoup/css/custom.css');?>" rel="stylesheet" type="text/css" media="all" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content=<?php echo $GLOBALS['db']->config->siteName;?>" />
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-<link rel="stylesheet" href="<?php echo $GLOBALS['db']->config->staticUrl.$GLOBALS['template']->getUrlModifyTimestamp('template/recoup/css/swipebox.css');?>">
-<?php if($GLOBALS['db']->config->useCDN === true) : ?>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<?php else: ?>
-<script src="<?php echo $GLOBALS['db']->config->staticUrl;?>js/jquery/jquery.min.js"></script>
-<?php endif; ?>
-<script type="text/javascript" src="<?php echo $GLOBALS['db']->config->staticUrl;?>template/recoup//js/move-top.js"></script>
-       <script type="text/javascript" src="<?php echo $GLOBALS['db']->config->staticUrl;?>template/recoup/js/easing.js"></script>
-		<script type="text/javascript">
-			jQuery(document).ready(function($) {
-				$(".scroll").click(function(event){		
-					event.preventDefault();
-					$('html,body').animate({scrollTop:$(this.hash).offset().top},1200);
-				});
-			});
-		</script>
-		<script type="text/javascript">
-		$(document).ready(function() {
-				/*
-				var defaults = {
-				containerID: 'toTop', // fading element id
-				containerHoverID: 'toTopHover', // fading element hover id
-				scrollSpeed: 1200,
-				easingType: 'linear' 
-				};
-				*/
-		$().UItoTop({ easingType: 'easeOutQuart' });
-});
-</script>
-<!------ Light Box ------>
-    <script src="<?php echo $GLOBALS['db']->config->staticUrl;?>template/recoup/js/jquery.swipebox.min.js"></script> 
-    <script type="text/javascript">
-		jQuery(function($) {
-			$(".swipebox").swipebox();
-		});
-	</script>
-    <!------ Eng Light Box ------>
+<meta name="keywords" content="<?php echo $GLOBALS['db']->config->siteName;?>" />
 <?php $GLOBALS['template']->renderBlock('head'); ?>
 </head>
 <body>
 <!-- header -->
-	<div class="banner">
+	<div class="header">
 		<div class="container">
 			<div class="logo">
-				<h1><a href="<?php echo $GLOBALS['db']->config->url;?>"><?php echo $GLOBALS['db']->config->siteName;?></a></h1>
+				<h1><a href="<?php echo $GLOBALS['db']->config->baseUrl;?>"><?php echo $GLOBALS['db']->config->siteName;?></a></h1>
 			</div>	
-			<div class="banner-info">
-				<?php $GLOBALS['template']->renderBlock('header'); ?>
-			</div>
-		</div>
-	</div>
-<!-- header -->
+			<div class="navigation">
+                                <?php $GLOBALS['template']->renderBlock('header'); ?>
+                        </div>
+                    </div>
+        </div>
+<!-- client -->
 <!-- contact -->
-        <div class="scroll">
-                    <a href="#contact" class="scroll"><img src="images/down.png" class="img-responsive" alt=""></a>
-	</div>
 	<div class="contact" id="contact">
 		<div class="container">
                     <?php $GLOBALS['template']->renderBlock('middle'); ?>
 		</div>
-		<?php $GLOBALS['template']->renderBlock('footer'); ?>
 	</div>
 	<a href="#" id="toTop" style="display: block;"><span id="toTopHover" style="opacity: 0;"></span> <span id="toTopHover" style="opacity: 0;"> </span></a>
+        <script>
+        currentPage = "<?php echo $GLOBALS['db']->config->baseUrl.$GLOBALS['template']->getControl()->getPage(); ?>";
+        </script>
+        <?php if($GLOBALS['db']->config->useCDN === true) : ?>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="<?php echo $GLOBALS['db']->config->staticUrl.$GLOBALS['template']->getUrlModifyTimestamp('js/common/common.js.gz');?>"></script>
+        <?php else: ?>
+        <script src="<?php echo $GLOBALS['db']->config->staticUrl;?>js/jquery/jquery.min.js"></script>
+        <script src="<?php echo $GLOBALS['db']->config->staticUrl;?>js/common/common.js"></script>
+        <?php endif; ?>
+        <?php $GLOBALS['template']->renderBlock('footer'); ?>
 <!-- contact -->
 </body>
 </html>
