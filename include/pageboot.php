@@ -79,7 +79,6 @@ if (!$connected) {
         $GLOBALS['user']=null;
         $control->addValidationMessage('error','errore nelle nostre macchine');
         $template->setBlock('middle','error/middle.phtml');
-        $template->setBlock('navigation','error/navigation.phtml');
         $template->render();
    break;
    }
