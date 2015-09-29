@@ -12,4 +12,4 @@ CREATE TABLE `profile` (
   `email` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `role_id` (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Profile'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Profile'

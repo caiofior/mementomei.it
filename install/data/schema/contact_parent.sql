@@ -4,4 +4,4 @@ CREATE TABLE `contact_parent` (
   PRIMARY KEY (`contact_id`,`parent_contanc_id`),
   KEY `contact_id` (`contact_id`),
   KEY `parent_contact_id` (`parent_contanc_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

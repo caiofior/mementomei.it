@@ -48,8 +48,8 @@ $db->cache = Zend\Cache\StorageFactory::factory($config->cache->toArray());
 }
 $db->config = $config;
 
-require __DIR__.'/../lib/floraobservation/Autoload.php';
-floraobservation\Autoload::getInstance();
+require __DIR__.'/../lib/mementomei/Autoload.php';
+mementomei\Autoload::getInstance();
 
 $template = new Template(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR,$config->template);
 $template->setBlock('head','general/head.phtml');

@@ -3,4 +3,4 @@ CREATE TABLE `content_category` (
   `name` varchar(200) DEFAULT NULL COMMENT 'Category name',
   `description` text COMMENT 'category description',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

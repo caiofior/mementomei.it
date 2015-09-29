@@ -9,4 +9,4 @@ CREATE TABLE `login` (
   `confirm_code` varchar(50) DEFAULT NULL COMMENT 'confirm code',
   `new_username` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='User data'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='User data'

@@ -10,6 +10,5 @@ CREATE TABLE `content` (
   `author` varchar(100) DEFAULT NULL COMMENT 'Author',
   PRIMARY KEY (`id`),
   UNIQUE KEY `label_UNIQUE` (`label`),
-  KEY `fk_content_1_idx` (`category_id`),
-  CONSTRAINT `fk_content_1` FOREIGN KEY (`category_id`) REFERENCES `content_category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+  KEY `fk_content_1_idx` (`category_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

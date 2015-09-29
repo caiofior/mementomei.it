@@ -1,5 +1,5 @@
 <?php
-namespace floraexport;
+namespace mementomei;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -20,10 +20,23 @@ class Autoload {
       
       }
 
-       if (!class_exists('flora\Autoload')) {
-           require __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'flora'.DIRECTORY_SEPARATOR.'Autoload.php';
-           \flora\Autoload::getInstance();
+       if (!class_exists('login\Autoload')) {
+           require __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'login'.DIRECTORY_SEPARATOR.'Autoload.php';
+           \login\Autoload::getInstance();
+
        }
+       
+       if (!class_exists('content\Autoload')) {
+           require __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'content'.DIRECTORY_SEPARATOR.'Autoload.php';
+           \content\Autoload::getInstance();
+       }
+       
+      $firePhpDir = $GLOBALS['db']->baseDir.'/lib/firephp/lib/FirePHPCore';
+      if (!class_exists('FirePHP') && is_dir($firePhpDir)) {
+         require $firePhpDir.'/FirePHP.class.php';
+         require $firePhpDir.'/fb.php';
+         $GLOBALS['firephp'] = \FirePHP::getInstance(true);
+      }
 
    }
    public static function getInstance()
@@ -33,8 +46,7 @@ class Autoload {
          $class = __CLASS__;
          self::$instance = new $class();
       }
-      require __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'phpqrcode-git'.DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'full'.DIRECTORY_SEPARATOR.'qrlib.php';
-      require __DIR__.DIRECTORY_SEPARATOR.'TaxaExport.php';
+
       return self::$instance;
    }
 }
