@@ -33,8 +33,8 @@ class LoginInstantiator implements \login\user\UserInstantiator {
       }
       $adminColl = new \login\user\LoginColl($db);
       $adminColl->loadAll(array('role_id'=>3));
-      $role_id = 3;
-      $role_description='User';
+      $role_id = 4;
+      $role_description='Beloving';
       $active = 0;
       if ($adminColl->count() == 0 ) {
          $role_id = 1;

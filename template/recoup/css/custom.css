@@ -54,6 +54,12 @@ body a{
   background: #16a085;
   padding: 5em 0 1em;
 }
+.contact p {
+    font-size: 1em;
+    line-height: 1.8em;
+    margin: 1em 0px;
+    color: #FFF;
+}
 /* Self Clearing Goodness */
 .container:after { content: "\0020"; display: block; height: 0; clear: both; visibility: hidden; }
 .clearfix:before,

@@ -1,0 +1,13 @@
+<?php
+$content = new \content\content\Content($GLOBALS['db']);
+$content->loadFromLabel('home');?>
+   <div>
+   <h1>
+      <?php echo $content->getData('title');?>
+   </h1>
+   <h2>
+      <?php echo $content->getData('abstract');?>
+   </h2>    
+   <div>
+      <?php echo $content->getData('content');?>
+   </div>

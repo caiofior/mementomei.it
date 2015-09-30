@@ -34,6 +34,7 @@ if (!array_key_exists('action',$_REQUEST)) {
 }
 switch ($_REQUEST['action']) {
 case 'edit':
+   $this->getTemplate()->setBlock('header','administrator/header.phtml'); 
    $this->getTemplate()->setBlock('middle','administrator/content/edit.phtml');
    $this->getTemplate()->setBlock('footer','administrator/content/footer.phtml');  
    if (
@@ -82,6 +83,7 @@ case 'jeditable' :
        }
    break;
 default:
+   $this->getTemplate()->setBlock('header','administrator/header.phtml'); 
    $this->getTemplate()->setBlock('middle','administrator/content/list.phtml');
    $this->getTemplate()->setBlock('footer','administrator/content/footer.phtml');  
 break;
