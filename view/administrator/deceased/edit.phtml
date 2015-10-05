@@ -1,0 +1,29 @@
+<?php
+$deceased = new \mementomei\Deceased($GLOBALS['db']);
+if (array_key_exists('id', $_REQUEST)) {
+   $deceased->loadFromId($_REQUEST['id']);
+} else {
+   $deceased->setData($_REQUEST);
+}
+?>
+<div id="breadcrump">
+   <p><a href="<?php echo $GLOBALS['db']->config->baseUrl;?>administrator.php">Home</a></p> &gt; <p><a href="<?php echo $GLOBALS['db']->config->baseUrl;?>administrator.php?task=deceased">Elenco dei deceduti</a></p> &gt; <h2>Modifica deceduto</h2>
+</div>
+<form method="post" action="#">
+   <input type="hidden" id="id" name="id" value="<?php echo $deceased->getData('id')?>">
+   <div>
+   <label for="title">Titolo</label>
+   <input id="title" name="title" value="<?php echo $deceased->getData('title')?>">
+   </div>
+   <div>
+   <label for="abstract">Sommario</label>
+   <input id="abstract" name="abstract" value="<?php echo $deceased->getData('abstract')?>">
+   </div>
+   <div>
+   <label for="deceased_field">Contenuto</label>
+   <textarea id="deceased_field" name="deceased"><?php echo $deceased->getData('deceased')?></textarea>
+   </div>
+   <div>
+      <input type="submit" name="submit" value="Salva">
+   </div>
+</form>
