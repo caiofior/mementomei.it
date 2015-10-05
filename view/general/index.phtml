@@ -1,4 +1,11 @@
 <?php
+if(
+        array_key_exists('profile',$GLOBALS) &&
+        $GLOBALS['profile'] instanceof \login\user\Profile &&
+        $GLOBALS['profile']->getData('role_id') == 4
+   ) : ?>
+<p>HI</p>
+<?php else :
 $content = new \content\content\Content($GLOBALS['db']);
 $content->loadFromLabel('home');?>
    <div>
@@ -11,3 +18,4 @@ $content->loadFromLabel('home');?>
    <div>
       <?php echo $content->getData('content');?>
    </div>
+<?php endif;

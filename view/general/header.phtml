@@ -2,10 +2,12 @@
 <li>
     <a href="<?php echo $GLOBALS['db']->config->baseUrl;?>contact.php">Contattaci</a>
 </li>
-<?php  if ($GLOBALS['profile'] instanceof \login\user\Profile) : ?>
+<?php  if (array_key_exists('profile',$GLOBALS) && $GLOBALS['profile'] instanceof \login\user\Profile) : ?>
+<?php if($GLOBALS['profile']->getData('role_id') == 1) : ?>
 <li>
     <a href="<?php echo $GLOBALS['db']->config->baseUrl;?>administrator.php">Amministrazione</a>
 </li>
+<?php endif; ?>
 <li>
     <a href="<?php echo $GLOBALS['db']->config->baseUrl;?>?logout">Esci</a></li>
 </li>

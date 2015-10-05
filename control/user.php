@@ -126,7 +126,7 @@ switch ($_REQUEST['task']) {
                $this->getTemplate()->setBlock('middle','administrator/dashboard.phtml');      
                break;
             default :
-               $this->getTemplate()->setBlock('middle','user/dashboard.phtml');            
+               $this->getTemplate()->setBlock('middle','general/index.phtml');            
                break;
          }
       } else {
