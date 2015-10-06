@@ -49,6 +49,15 @@ $(document).ready(function() {
       plugins: "link",
       selector: "textarea"
     });
+    $("#first_name,#last_name").change(function(){
+        oldvalue=$("#first_name").data("oldvalue")+" "+$("#last_name").data("oldvalue");
+        currentvalue = $("#description").val();
+        if (currentvalue == "" || oldvalue == currentvalue) {
+            $("#description").val($("#first_name").val()+" "+$("#last_name").val());
+            $("#first_name").data("oldvalue",$("#first_name").val());
+            $("#last_name").data("oldvalue",$("#last_name").val());        
+        }
+    });
     $.datepicker.setDefaults(
         $.extend(
             $.datepicker.regional[ "it" ],
