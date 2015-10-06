@@ -1,4 +1,8 @@
-<?php
+<?php if($GLOBALS['db']->config->useCDN === true) : ?>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<?php else : ?>
+<link rel="stylesheet" href="<?php echo $GLOBALS['db']->config->baseUrl;?>js/jqueryui/themes/base/jquery-ui.min.css">
+<?php endif;
 $deceased = new \mementomei\Deceased($GLOBALS['db']);
 if (array_key_exists('id', $_REQUEST)) {
    $deceased->loadFromId($_REQUEST['id']);
@@ -12,16 +16,29 @@ if (array_key_exists('id', $_REQUEST)) {
 <form method="post" action="#">
    <input type="hidden" id="id" name="id" value="<?php echo $deceased->getData('id')?>">
    <div>
-   <label for="title">Titolo</label>
-   <input id="title" name="title" value="<?php echo $deceased->getData('title')?>">
+   <label for="first_name">Nome</label>
+   <input id="first_name" name="first_name" value="<?php echo $deceased->getData('first_name')?>">
    </div>
    <div>
-   <label for="abstract">Sommario</label>
-   <input id="abstract" name="abstract" value="<?php echo $deceased->getData('abstract')?>">
+   <label for="last_name">Cognome</label>
+   <input id="last_name" name="last_name" value="<?php echo $deceased->getData('last_name')?>">
    </div>
    <div>
-   <label for="deceased_field">Contenuto</label>
-   <textarea id="deceased_field" name="deceased"><?php echo $deceased->getData('deceased')?></textarea>
+   <label for="description">Denominazione</label>
+   <input id="description" name="description" value="<?php echo $deceased->getData('description')?>">
+   </div>
+   <div>
+   <div>
+   <label for="date_of_birth">Data di nascita</label>
+   <input id="date_of_birth" name="date_of_birth" type="date" value="<?php echo $deceased->getData('date_of_birth')?>">
+   </div>
+   <div>
+   <label for="date_of_death">Data di decesso</label>
+   <input id="date_of_death" name="date_of_death" type="date" value="<?php echo $deceased->getData('date_of_death')?>">
+   </div>
+   <div>
+   <label for="epitaph">Epitaffio</label>
+   <textarea id="epitaph" name="epitaph"><?php echo $deceased->getData('epitaph')?></textarea>
    </div>
    <div>
       <input type="submit" name="submit" value="Salva">

@@ -49,4 +49,14 @@ $(document).ready(function() {
       plugins: "link",
       selector: "textarea"
     });
+    $.datepicker.setDefaults(
+        $.extend(
+            $.datepicker.regional[ "it" ],
+            {showOn: "button"},
+            {buttonImage: "style/general/images/calendar.gif"},
+            {buttonImageOnly: true},
+            {'dateFormat':$.datepicker.W3C}
+        )
+    );
+    $("input[type=date]").datepicker();
 });
