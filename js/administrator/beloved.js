@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    ct = $("#deceasedT").dataTable({
+    ct = $("#belovedT").dataTable({
         "oLanguage":  {
             "sUrl": "js/common/datatables/lang/it.json"
          },
@@ -10,11 +10,11 @@ $(document).ready(function() {
         "bServerSide": true,
         "sAjaxSource": "#",
          "fnServerParams": function ( aoData ) {
-            aoData.push({ "name": "task", "value": "deceased" });  
+            aoData.push({ "name": "task", "value": "beloved" });  
          },
         "aoColumnDefs":  getDatatableMetadata(this),
         "drawCallback": function( ) {
-         $('.editable').editable('?task=deceased&action=jeditable&id='+$('#id').val(), {
+         $('.editable').editable('?task=belobed&action=jeditable&id='+$('#id').val(), {
                "indicator" : "Salvataggio in corso...",
                "tooltip"   : "Click per modificare...",
                "placeholder" : "Clicca per modificare",

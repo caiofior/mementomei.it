@@ -13,8 +13,8 @@ if (
    exit;
 }
 switch ($_REQUEST['task']) {
-   case 'deceased':
-      require __DIR__.DIRECTORY_SEPARATOR.'administrator'.DIRECTORY_SEPARATOR.'deceased.php';    
+   case 'beloved':
+      require __DIR__.DIRECTORY_SEPARATOR.'administrator'.DIRECTORY_SEPARATOR.'beloved.php';    
       break;
    case 'user':
       require __DIR__.DIRECTORY_SEPARATOR.'administrator'.DIRECTORY_SEPARATOR.'user.php';    

@@ -3,42 +3,42 @@
 <?php else : ?>
 <link rel="stylesheet" href="<?php echo $GLOBALS['db']->config->baseUrl;?>js/jqueryui/themes/base/jquery-ui.min.css">
 <?php endif;
-$deceased = new \mementomei\Deceased($GLOBALS['db']);
+$beloved = new \mementomei\Beloved($GLOBALS['db']);
 if (array_key_exists('id', $_REQUEST)) {
-   $deceased->loadFromId($_REQUEST['id']);
+   $beloved->loadFromId($_REQUEST['id']);
 } else {
-   $deceased->setData($_REQUEST);
+   $beloved->setData($_REQUEST);
 }
 ?>
 <div id="breadcrump">
    <p><a href="<?php echo $GLOBALS['db']->config->baseUrl;?>administrator.php">Home</a></p> &gt; <p><a href="<?php echo $GLOBALS['db']->config->baseUrl;?>administrator.php?task=deceased">Elenco dei deceduti</a></p> &gt; <h2>Modifica deceduto</h2>
 </div>
 <form method="post" action="#">
-   <input type="hidden" id="id" name="id" value="<?php echo $deceased->getData('id')?>">
+   <input type="hidden" id="id" name="id" value="<?php echo $beloved->getData('id')?>">
    <div>
    <label for="first_name">Nome</label>
-   <input id="first_name" name="first_name" value="<?php echo $deceased->getData('first_name')?>" data-oldvalue="<?php echo $deceased->getData('first_name')?>">
+   <input id="first_name" name="first_name" value="<?php echo $beloved->getData('first_name')?>" data-oldvalue="<?php echo $beloved->getData('first_name')?>">
    </div>
    <div>
    <label for="last_name">Cognome</label>
-   <input id="last_name" name="last_name" value="<?php echo $deceased->getData('last_name')?>" data-oldvalue="<?php echo $deceased->getData('last_name')?>">
+   <input id="last_name" name="last_name" value="<?php echo $beloved->getData('last_name')?>" data-oldvalue="<?php echo $beloved->getData('last_name')?>">
    </div>
    <div>
    <label for="description">Denominazione</label>
-   <input id="description" name="description" value="<?php echo $deceased->getData('description')?>">
+   <input id="description" name="description" value="<?php echo $beloved->getData('description')?>">
    </div>
    <div>
    <div>
    <label for="date_of_birth">Data di nascita</label>
-   <input id="date_of_birth" name="date_of_birth" type="date" value="<?php echo $deceased->getData('date_of_birth')?>">
+   <input id="date_of_birth" name="date_of_birth" type="date" value="<?php echo $beloved->getData('date_of_birth')?>">
    </div>
    <div>
    <label for="date_of_death">Data di decesso</label>
-   <input id="date_of_death" name="date_of_death" type="date" value="<?php echo $deceased->getData('date_of_death')?>">
+   <input id="date_of_death" name="date_of_death" type="date" value="<?php echo $beloved->getData('date_of_death')?>">
    </div>
    <div>
    <label for="epitaph">Epitaffio</label>
-   <textarea id="epitaph" name="epitaph"><?php echo $deceased->getData('epitaph')?></textarea>
+   <textarea id="epitaph" name="epitaph"><?php echo $beloved->getData('epitaph')?></textarea>
    </div>
    <div>
       <input type="submit" name="submit" value="Salva">

@@ -139,7 +139,8 @@ abstract class Content {
             ) {
             throw new \Exception('No database table associated with this content',1409011101);
         }
-        $data = $this->table->select(array($this->primary=>$id))->current();
+        $select = $this->table->getSql()->select()->where(array($this->primary=>$id));
+        $data = $this->table->select($this->table->selectWith($select))->current();
         if (is_object($data))
             $this->data = $data->getArrayCopy();
         else {
@@ -187,7 +188,7 @@ abstract class Content {
             $this->rawData = array_merge($this->data, $data);
          }
         else if (!is_null($field) ) {
-            $data = $this->testFieldType($field, $value);
+            $data = $this->testFieldType($field, $data);
             if (array_key_exists($field,$this->empty_entity))
                 $this->data[$field] = $data;
             $this->rawData[$field] = $data;

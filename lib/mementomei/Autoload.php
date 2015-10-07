@@ -48,8 +48,8 @@ class Autoload {
       }
       require __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'geoPHP'.DIRECTORY_SEPARATOR.'geoPHP.inc';
       
-      require __DIR__.DIRECTORY_SEPARATOR.'Deceased.php';
-      require __DIR__.DIRECTORY_SEPARATOR.'DeceasedColl.php';
+      require __DIR__.DIRECTORY_SEPARATOR.'Beloved.php';
+      require __DIR__.DIRECTORY_SEPARATOR.'BelovedColl.php';
       
       return self::$instance;
    }

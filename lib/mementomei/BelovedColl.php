@@ -5,9 +5,9 @@ namespace mementomei;
  *
  * @author caiofior
  */
-class DeceasedColl extends \ContentColl {
+class BelovedColl extends \ContentColl {
       public function __construct($db) {
-         parent::__construct(new \mementomei\Deceased($db));
+         parent::__construct(new \mementomei\Beloved($db));
       }
       /**
       * Customizes select statement

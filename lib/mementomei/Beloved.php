@@ -5,7 +5,7 @@ namespace mementomei;
  *
  * @author caiofior
  */
-class Deceased extends \Content
+class Beloved extends \Content
 {
      /**
      * GeoPHP Point reference
@@ -17,7 +17,7 @@ class Deceased extends \Content
     * @param \Zend\Db\Adapter\Adapter $db
     */
    public function __construct(\Zend\Db\Adapter\Adapter $db) {
-      parent::__construct($db, 'deceased');
+      parent::__construct($db, 'beloved');
    }
    /**
     * Load data from id
@@ -29,16 +29,17 @@ class Deceased extends \Content
            'point'=>new \Zend\Db\Sql\Expression('asText(main_place)')
            ));
        $select->where(array($this->primary=>$id));
-       $statement = $this->table->getSql()->prepareStatementForSqlObject($select);
-       $results = $statement->execute();
-       $resultSet = new \Zend\Db\ResultSet\ResultSet();
-       $resultSet->initialize($results);
-       if($resultSet->current() === false){
+       $data = $this->table->select($this->table->selectWith($select))->current();
+       if (is_object($data)) {
+            $this->data = $data->getArrayCopy();
+            $this->rawData = $this->data;
+        }
+        else {
            $mysqli = $this->table->getAdapter()->getDriver()->getConnection()->getResource();  
            throw new \Exception('Error on query '.$select->getSqlString($this->table->getAdapter()->getPlatform()).' '.$mysqli->errno.' '.$mysqli->error,1401301242);
        }
-       $this->data = $resultSet->current()->getArrayCopy();
-       $this->rawData = $this->data;
+
+       
        $this->getCoordinates();
    }
     /**
@@ -58,6 +59,8 @@ class Deceased extends \Content
     */
    public function insert() {
        $this->updateCoordinates();
+       $this->data['creation_datetime'] = date('Y-m-d H:i:s');
+       $this->data['change_datetime'] = date('Y-m-d H:i:s');
        parent::insert();
    }
    /**
@@ -68,6 +71,7 @@ class Deceased extends \Content
            unset($this->data['main_place']);
        }
        $this->updateCoordinates();
+       $this->data['change_datetime'] = date('Y-m-d H:i:s');
        parent::update();
    }
    /**

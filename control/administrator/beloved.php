@@ -1,21 +1,21 @@
 <?php
 if (array_key_exists('sEcho', $_REQUEST)) {
       $result = array();
-      $deceasedColl = new \mementomei\DeceasedColl($GLOBALS['db']);
-      $deceasedColl->loadAll($_REQUEST);
+      $belovedColl = new \mementomei\BelovedColl($GLOBALS['db']);
+      $belovedColl->loadAll($_REQUEST);
       $result['sEcho']=intval($_REQUEST['sEcho']);
       $request = $_REQUEST;
       unset($request['sSearch']);
-      $result['iTotalRecords']=$deceasedColl->countAll($request);
-      $result['iTotalDisplayRecords']=$deceasedColl->countAll($_REQUEST);
+      $result['iTotalRecords']=$belovedColl->countAll($request);
+      $result['iTotalDisplayRecords']=$belovedColl->countAll($_REQUEST);
       $result['aaData']=array();
-      $columns = $deceasedColl->getColumns();
-      foreach($deceasedColl->getItems() as $key => $deceased) {
+      $columns = $belovedColl->getColumns();
+      foreach($belovedColl->getItems() as $key => $beloved) {
          $row=array();
          foreach($columns as $column) {
-            $data = $deceased->getRawData($column);
+            $data = $beloved->getRawData($column);
             if ($column == 'actions') {
-               $data = '<a class="actions modify" title="Modifica" href="?task=deceased&amp;action=edit&amp;id='.$deceased->getData('id').'">Modifica</a><a class="actions delete" title="Cancella" href="?task=deceased&amp;action=delete&amp;id='.$deceased->getData('id').'">Cancella</a>';
+               $data = '<a class="actions modify" title="Modifica" href="?task=beloved&amp;action=edit&amp;id='.$beloved->getData('id').'">Modifica</a><a class="actions delete" title="Cancella" href="?task=beloved&amp;action=delete&amp;id='.$beloved->getData('id').'">Cancella</a>';
             } 
             $row[] = $data;     
          }
@@ -31,8 +31,8 @@ if (!array_key_exists('action',$_REQUEST)) {
 switch ($_REQUEST['action']) {
 case 'edit':
    $this->getTemplate()->setBlock('header','administrator/header.phtml'); 
-   $this->getTemplate()->setBlock('middle','administrator/deceased/edit.phtml');
-   $this->getTemplate()->setBlock('footer','administrator/deceased/footer.phtml');  
+   $this->getTemplate()->setBlock('middle','administrator/beloved/edit.phtml');
+   $this->getTemplate()->setBlock('footer','administrator/beloved/footer.phtml');  
    if (
             array_key_exists('xhrValidate', $_REQUEST) ||
             array_key_exists('submit', $_REQUEST)
@@ -61,24 +61,24 @@ case 'edit':
             $this->addValidationMessage('date_of_birth','la data di nascita è successiva alla data di decesso');
         }
             
-      $deceased = new \mementomei\Deceased($GLOBALS['db']);
+      $beloved = new \mementomei\Beloved($GLOBALS['db']);
       if (array_key_exists('submit', $_REQUEST) && $this->formIsValid()) {
-         $deceased->setData($_REQUEST);
+         $beloved->setData($_REQUEST);
          if (array_key_exists('id', $_REQUEST) && is_numeric($_REQUEST['id'])) {
-            $deceased->update();
+            $beloved->update();
          } else {
-            $deceased->insert();
+            $beloved->insert();
          }
-         header('Location: '.$GLOBALS['db']->config->baseUrl.'administrator.php?task=deceased');
+         header('Location: '.$GLOBALS['db']->config->baseUrl.'administrator.php?task=beloved');
          exit(); 
       }
    }
    break; 
 case 'delete' :
-   $deceased = new \mementomei\Deceased($GLOBALS['db']);
+   $beloved = new \mementomei\Beloved($GLOBALS['db']);
    if (array_key_exists('id', $_REQUEST) && $_REQUEST['id'] != '') {      
-      $deceased->loadFromId($_REQUEST['id']);
-      $deceased->delete();
+      $beloved->loadFromId($_REQUEST['id']);
+      $beloved->delete();
    }
    exit;
    break;
@@ -89,18 +89,18 @@ case 'jeditable' :
            array_key_exists('value',$_REQUEST) &&
            strlen($_REQUEST['value']) > 1
        ) {
-         $deceased = new \mementomei\Deceased($GLOBALS['db']);
-         $deceased->loadFromId($_REQUEST['id']);
-         $deceased->setData($_REQUEST['value'], 'name');
-         $deceased->update();
-         $deceased->loadFromId($_REQUEST['id']);
-         echo $deceased->getData('name');
+         $beloved = new \mementomei\Beloved($GLOBALS['db']);
+         $beloved->loadFromId($_REQUEST['id']);
+         $beloved->setData($_REQUEST['value'], 'name');
+         $beloved->update();
+         $beloved->loadFromId($_REQUEST['id']);
+         echo $beloved->getData('name');
          exit;
        }
    break;
 default:
    $this->getTemplate()->setBlock('header','administrator/header.phtml'); 
-   $this->getTemplate()->setBlock('middle','administrator/deceased/list.phtml');
-   $this->getTemplate()->setBlock('footer','administrator/deceased/footer.phtml');  
+   $this->getTemplate()->setBlock('middle','administrator/beloved/list.phtml');
+   $this->getTemplate()->setBlock('footer','administrator/beloved/footer.phtml');  
 break;
 }
