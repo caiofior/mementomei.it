@@ -140,7 +140,7 @@ abstract class Content {
             throw new \Exception('No database table associated with this content',1409011101);
         }
         $select = $this->table->getSql()->select()->where(array($this->primary=>$id));
-        $data = $this->table->select($this->table->selectWith($select))->current();
+        $data = $this->table->selectWith($select)->current();
         if (is_object($data))
             $this->data = $data->getArrayCopy();
         else {
