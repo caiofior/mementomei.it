@@ -31,7 +31,7 @@ class ProfileColl extends \ContentColl {
           $select->where('`profile`.`role_id` = '.intval($criteria['role_id']));
       }
       if (array_key_exists('sSearch', $criteria) && $criteria['sSearch'] != '') {
-         $select->where(' ( `profile`.`first_name` LIKE "'.addslashes($criteria['sSearch']).'%" OR `profile`.`last_name` LIKE "'.addslashes($criteria['sSearch']).'%" ) ');
+         $select->where(' ( `profile`.`first_name` LIKE "'.addslashes($criteria['sSearch']).'%" OR `profile`.`last_name` LIKE "'.addslashes($criteria['sSearch']).'%" OR `profile`.`email` LIKE "'.addslashes($criteria['sSearch']).'%" ) ');
       }
       return $select;
     }

@@ -1,0 +1,25 @@
+<?php if ($profileColl->count() == 0) : ?>
+<div>Nesun utente reperito</div>
+<?php else: ?>
+<div>
+    <div>
+        <div>Aggiungi</div>
+        <div>Nome</div>
+        <div>Email</div>
+    </div>
+<?php endif;
+foreach($profileColl->getItems() as $profile) : ?>
+<div>
+    <div>
+    <?php echo $profile->getData('id'); ?>
+    </div>
+    <div>
+    <?php echo $profile->getData('first_name'); ?>
+    <?php echo $profile->getData('last_name'); ?>
+    </div>
+    <div>
+    <?php echo $profile->getData('email'); ?>
+    </div>
+</div>
+<?php endforeach; ?>
+</div>

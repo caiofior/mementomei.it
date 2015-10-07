@@ -68,4 +68,15 @@ $(document).ready(function() {
         )
     );
     $("input[type=date]").datepicker();
+    $("#beloving_search").change(function(){
+        $.get(
+            $(this).closest("form").attr("action"),
+            {
+                sSearch:$(this).val()
+            },
+            function(data){
+                $("#beloving_search_list").html(data);
+            }
+        );
+    });
 });

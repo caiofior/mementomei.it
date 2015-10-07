@@ -98,6 +98,15 @@ case 'jeditable' :
          exit;
        }
    break;
+case 'beloving_search' :
+    $profileColl = new \login\user\ProfileColl($GLOBALS['db']);
+    $_REQUEST['role_id']=4;
+    $_REQUEST['iDisplayStart']=0;
+    $_REQUEST['iDisplayLength']=10;
+    $profileColl->loadAll($_REQUEST);
+    require __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'view'.DIRECTORY_SEPARATOR.'administrator'.DIRECTORY_SEPARATOR.'beloved'.DIRECTORY_SEPARATOR.'belovingSearch.phtml';
+    exit;
+   break;
 default:
    $this->getTemplate()->setBlock('header','administrator/header.phtml'); 
    $this->getTemplate()->setBlock('middle','administrator/beloved/list.phtml');
