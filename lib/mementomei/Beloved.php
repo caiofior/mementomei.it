@@ -75,6 +75,16 @@ class Beloved extends \Content
        parent::update();
    }
    /**
+    * Deleted a beloved and its relations
+    */
+   public function delete() {
+       if (array_key_exists('id', $this->data) && $this->data['id'] != '')
+            $this->db->query('DELETE FROM `beloved_beloving` 
+              WHERE `beloved_id`=' . intval($this->data['id'])
+                    , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+       parent::delete();
+   }
+   /**
     * Update the coordinates
     */
    private function updateCoordinates() {
@@ -84,6 +94,25 @@ class Beloved extends \Content
            $this->data['main_place']=new \Zend\Db\Sql\Expression('PointFromText("POINT(0 0)")');
        }
    }
+   /**
+     * Returns the associated collection of beloving profiles
+     * @return \login\user\ProfileColl()
+     */
+    public function getBelovingColl() {
+        $belovingColl = new \login\user\ProfileColl($this->db);
+        $belovingColl->loadAll();
+        if (array_key_exists('id', $this->data) && $this->data['id'] != '') {
+            $resultSet = $this->db->query('SELECT `profile_id` FROM `beloved_beloving` 
+                WHERE `beloved_id`=' . intval($this->data['id'])
+                    , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+            foreach ($resultSet->toArray() as $beloving) {
+                $filteredBelovingColl = $belovingColl->filterByAttributeValue($beloving['region_id'], 'id');
+                $belovingRegion = $filteredBelovingColl->getFirst();
+                $belovingRegion->setData('1', 'selected');
+            }
+        }
+        return $belovingColl;
+    }
    /**
      * Sets teh regions associated with a taxa
      * @param array $belovings

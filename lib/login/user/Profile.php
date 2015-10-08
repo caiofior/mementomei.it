@@ -48,6 +48,9 @@ class Profile extends \Content
         $this->db->query('DELETE FROM `facebook` 
         WHERE `profile_id`=' . intval($this->data['id'])
                 , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+        $this->db->query('DELETE FROM `beloved_beloving` 
+        WHERE `profile_id`=' . intval($this->data['id'])
+                , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
         parent::delete();
     }
 
