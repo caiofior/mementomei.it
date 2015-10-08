@@ -43,21 +43,23 @@ if (array_key_exists('id', $_REQUEST)) {
    <p>Creato il:<?php echo $beloved->getData('creation_datetime')?></p>
    <p>Aggiornato il:<?php echo $beloved->getData('change_datetime')?></p>
    <div>
-      <input type="submit" name="submit" value="Salva">
-   </div>
-</form>
-<div>
     <div>
     <p><h5>Associa utente</h5></p>
-    <form method="post" action="<?php echo $GLOBALS['db']->config->baseUrl;?>administrator.php?task=beloved&amp;action=beloving_search">
         <div>
             <label for="beloving_search">Cerca in nome, cognome e denominazione</label>
-            <input type="search" id="beloving_search"/>
+            <input type="search" id="beloving_search" data-url="<?php echo $GLOBALS['db']->config->baseUrl;?>administrator.php?task=beloved&amp;action=beloving_search"/>
             <div id="beloving_search_list"></div>
         </div>
-    </form>
     </div>
     <div>
     <p><h5>Utenti associati</h5></p>
+    <div id="beloving_list">
+    <?php require __DIR__.DIRECTORY_SEPARATOR.'belovingList.phtml'?>
     </div>
-</div>
+    </div>
+    </div>
+   <div>
+      <input type="submit" name="submit" value="Salva">
+   </div>
+</form>
+

@@ -8,7 +8,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <html>
 <head>
 <title><?php echo $GLOBALS['db']->config->siteName;?></title>
-<link href="<?php echo $GLOBALS['db']->config->staticUrl.$GLOBALS['template']->getUrlModifyTimestamp('template/recoup/css/bootstrap.css');?>" rel="stylesheet" type="text/css" media="all">
+<?php if($GLOBALS['db']->config->useCDN === true) : ?>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<?php else: ?>
+<link href="<?php echo $GLOBALS['db']->config->staticUrl.$GLOBALS['template']->getUrlModifyTimestamp('style/bootstrap/dist/css/bootstrap.css');?>" rel="stylesheet" type="text/css" media="all">
+<?php endif; ?>
 <link href="<?php echo $GLOBALS['db']->config->staticUrl.$GLOBALS['template']->getUrlModifyTimestamp('template/recoup/css/custom.css');?>" rel="stylesheet" type="text/css" media="all" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

@@ -70,7 +70,7 @@ $(document).ready(function() {
     $("input[type=date]").datepicker();
     $("#beloving_search").change(function(){
         $.get(
-            $(this).closest("form").attr("action"),
+            $(this).data("url"),
             {
                 sSearch:$(this).val()
             },

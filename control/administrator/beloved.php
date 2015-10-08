@@ -100,7 +100,6 @@ case 'jeditable' :
    break;
 case 'beloving_search' :
     $profileColl = new \login\user\ProfileColl($GLOBALS['db']);
-    $_REQUEST['role_id']=4;
     $_REQUEST['iDisplayStart']=0;
     $_REQUEST['iDisplayLength']=10;
     $profileColl->loadAll($_REQUEST);
