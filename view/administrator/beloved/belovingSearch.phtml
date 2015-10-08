@@ -3,21 +3,18 @@
 <?php else: ?>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-xs-4">Aggiungi</div>
-        <div class="col-xs-4">Nome</div>
-        <div class="col-xs-4">Email</div>
+        <div class="col-xs-6">Nome</div>
+        <div class="col-xs-6">Email</div>
     </div>
 <?php endif;
 foreach($profileColl->getItems() as $profile) : ?>
 <div class="row">
-    <div class="col-xs-4">
-    <?php echo $profile->getData('id'); ?>
-    </div>
-    <div class="col-xs-4">
+    <div class="col-xs-6">  
+    <a class="actions add addBeloved" href="#" data-id="<?php echo $profile->getData('id'); ?>">Aggiungi</a>
     <?php echo $profile->getData('first_name'); ?>
     <?php echo $profile->getData('last_name'); ?>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-6">
     <?php echo $profile->getData('email'); ?>
     </div>
 </div>

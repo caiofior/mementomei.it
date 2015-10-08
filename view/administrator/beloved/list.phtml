@@ -1,6 +1,8 @@
 <?php if($GLOBALS['db']->config->useCDN === true) : ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/base/jquery-ui.min.css"></script>
 <link rel="stylesheet" href="//cdn.datatables.net/1.10.3/css/jquery.dataTables.min.css">
 <?php else : ?>
+<link rel="stylesheet" href="<?php echo $GLOBALS['db']->config->baseUrl;?>/js/jqueryui/themes/base/jquery-ui.min.css">
 <link rel="stylesheet" href="<?php echo $GLOBALS['db']->config->baseUrl;?>/js/DataTables/media/css/jquery.dataTables.css">
 <?php endif; ?>
 <div id="breadcrump">

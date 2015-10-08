@@ -84,4 +84,21 @@ class Beloved extends \Content
            $this->data['main_place']=new \Zend\Db\Sql\Expression('PointFromText("POINT(0 0)")');
        }
    }
+   /**
+     * Sets teh regions associated with a taxa
+     * @param array $belovings
+     */
+    public function setBeloving(array $belovings) {
+        if (array_key_exists('id', $this->data) && $this->data['id'] != '')
+            $this->db->query('DELETE FROM `beloved_beloving` 
+              WHERE `beloved_id`=' . intval($this->data['id'])
+                    , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+        foreach ($belovings as $beloving) {
+            $this->db->query('INSERT INTO `beloved_beloving` 
+              (`beloved_id`,`profile_id`)
+              VALUES
+              (' . intval($this->data['id']) . ',"' . addslashes($beloving) . '")'
+                    , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+        }
+    }
 }

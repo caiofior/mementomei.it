@@ -64,6 +64,7 @@ case 'edit':
       $beloved = new \mementomei\Beloved($GLOBALS['db']);
       if (array_key_exists('submit', $_REQUEST) && $this->formIsValid()) {
          $beloved->setData($_REQUEST);
+         $beloved->setBeloving($_REQUEST['beloving']);
          if (array_key_exists('id', $_REQUEST) && is_numeric($_REQUEST['id'])) {
             $beloved->update();
          } else {

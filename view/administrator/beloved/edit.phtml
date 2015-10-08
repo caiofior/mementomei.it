@@ -48,6 +48,7 @@ if (array_key_exists('id', $_REQUEST)) {
         <div>
             <label for="beloving_search">Cerca in nome, cognome e denominazione</label>
             <input type="search" id="beloving_search" data-url="<?php echo $GLOBALS['db']->config->baseUrl;?>administrator.php?task=beloved&amp;action=beloving_search"/>
+            <img style="display: none;" src="<?php echo $GLOBALS['db']->config->baseUrl;?>/style/general/images/ajax-loader.gif">
             <div id="beloving_search_list"></div>
         </div>
     </div>
