@@ -99,17 +99,17 @@ class Beloved extends \Content
      * @return \login\user\ProfileColl()
      */
     public function getBelovingColl() {
-        $belovingColl = new \login\user\ProfileColl($this->db);
-        $belovingColl->loadAll();
-        if (array_key_exists('id', $this->data) && $this->data['id'] != '') {
-            $resultSet = $this->db->query('SELECT `profile_id` FROM `beloved_beloving` 
+        $resultSet = $this->db->query('SELECT `profile`.* FROM `profile` 
+                LEFT JOIN `beloved_beloving` ON `beloved_beloving`.`profile_id`=`profile`.`id`
                 WHERE `beloved_id`=' . intval($this->data['id'])
                     , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
-            foreach ($resultSet->toArray() as $beloving) {
-                $filteredBelovingColl = $belovingColl->filterByAttributeValue($beloving['region_id'], 'id');
-                $belovingRegion = $filteredBelovingColl->getFirst();
-                $belovingRegion->setData('1', 'selected');
-            }
+        $belovingColl = new \login\user\ProfileColl($this->db);
+        $beloving = new \login\user\Profile($this->db);
+        foreach ($resultSet->toArray() as $belovingData) {
+            $newBeloving = clone $beloving;
+            $newBeloving->setData($belovingData);
+            $belovingColl->appendItem($newBeloving);
+
         }
         return $belovingColl;
     }

@@ -55,7 +55,29 @@ if (array_key_exists('id', $_REQUEST)) {
     <div>
     <p><h5>Utenti associati</h5></p>
     <div id="beloving_list">
-    <?php require __DIR__.DIRECTORY_SEPARATOR.'belovingList.phtml'?>
+    <?php $belovingColl = $beloved->getBelovingColl();
+     if ($belovingColl->count() == 0) : ?>
+        <div>Nessun utente reperito</div>
+    <?php else: ?>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-6">Nome</div>
+            <div class="col-xs-6">Email</div>
+        </div>
+    <?php foreach($belovingColl->getItems() as $beloving) : ?>
+    <div class="row">
+        <div class="col-xs-6">  
+        <a class="actions delete removedBeloved" href="#" data-id="<?php echo $beloving->getData('id'); ?>">Aggiungi</a>
+        <?php echo $beloving->getData('first_name'); ?>
+        <?php echo $beloving->getData('last_name'); ?>
+        </div>
+        <div class="col-xs-6">
+        <?php echo $beloving->getData('email'); ?>
+        </div>
+    </div>
+    <?php endforeach; ?>
+    </div>
+    <?php endif;?>        
     </div>
     </div>
     </div>

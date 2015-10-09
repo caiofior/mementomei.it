@@ -1,13 +1,12 @@
 <?php if ($profileColl->count() == 0) : ?>
-<div>Nesun utente reperito</div>
+<div>Nessun utente reperito</div>
 <?php else: ?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-6">Nome</div>
         <div class="col-xs-6">Email</div>
     </div>
-<?php endif;
-foreach($profileColl->getItems() as $profile) : ?>
+<?php foreach($profileColl->getItems() as $profile) : ?>
 <div class="row">
     <div class="col-xs-6">  
     <a class="actions add addBeloved" href="#" data-id="<?php echo $profile->getData('id'); ?>">Aggiungi</a>
@@ -20,3 +19,4 @@ foreach($profileColl->getItems() as $profile) : ?>
 </div>
 <?php endforeach; ?>
 </div>
+<?php endif;
