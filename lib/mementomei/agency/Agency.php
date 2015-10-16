@@ -1,23 +1,23 @@
 <?php
-namespace mementomei;
+namespace mementomei\agency;
 /**
- * Deceased class
+ * Agency class
  *
  * @author caiofior
  */
-class Beloved extends \Content
+abstract class Agency extends \Content
 {
-     /**
+    /**
      * GeoPHP Point reference
      * @var /Point
      */
-    private $point;
+    protected $point;
    /**
     * Associates the database table
     * @param \Zend\Db\Adapter\Adapter $db
     */
    public function __construct(\Zend\Db\Adapter\Adapter $db) {
-      parent::__construct($db, 'beloved');
+      parent::__construct($db, 'agency');
    }
    /**
     * Load data from id
@@ -38,6 +38,7 @@ class Beloved extends \Content
            $mysqli = $this->table->getAdapter()->getDriver()->getConnection()->getResource();  
            throw new \Exception('Error on query '.$select->getSqlString($this->table->getAdapter()->getPlatform()).' '.$mysqli->errno.' '.$mysqli->error,1401301242);
        }
+
        
        $this->getCoordinates();
    }
@@ -74,16 +75,6 @@ class Beloved extends \Content
        parent::update();
    }
    /**
-    * Deleted a beloved and its relations
-    */
-   public function delete() {
-       if (array_key_exists('id', $this->data) && $this->data['id'] != '')
-            $this->db->query('DELETE FROM `beloved_beloving` 
-              WHERE `beloved_id`=' . intval($this->data['id'])
-                    , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
-       parent::delete();
-   }
-   /**
     * Update the coordinates
     */
    private function updateCoordinates() {
@@ -93,39 +84,4 @@ class Beloved extends \Content
            $this->data['main_place']=new \Zend\Db\Sql\Expression('PointFromText("POINT(0 0)")');
        }
    }
-   /**
-     * Returns the associated collection of beloving profiles
-     * @return \login\user\ProfileColl()
-     */
-    public function getBelovingColl() {
-        $resultSet = $this->db->query('SELECT `profile`.* FROM `profile` 
-                LEFT JOIN `beloved_beloving` ON `beloved_beloving`.`profile_id`=`profile`.`id`
-                WHERE `beloved_id`=' . intval($this->data['id'])
-                    , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
-        $belovingColl = new \login\user\ProfileColl($this->db);
-        $beloving = new \login\user\Profile($this->db);
-        foreach ($resultSet->toArray() as $belovingData) {
-            $newBeloving = clone $beloving;
-            $newBeloving->setData($belovingData);
-            $belovingColl->appendItem($newBeloving);
-        }
-        return $belovingColl;
-    }
-   /**
-     * Sets teh regions associated with a taxa
-     * @param array $belovings
-     */
-    public function setBeloving(array $belovings) {
-        if (array_key_exists('id', $this->data) && $this->data['id'] != '')
-            $this->db->query('DELETE FROM `beloved_beloving` 
-              WHERE `beloved_id`=' . intval($this->data['id'])
-                    , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
-        foreach ($belovings as $beloving) {
-            $this->db->query('INSERT INTO `beloved_beloving` 
-              (`beloved_id`,`profile_id`)
-              VALUES
-              (' . intval($this->data['id']) . ',"' . addslashes($beloving) . '")'
-                    , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
-        }
-    }
 }

@@ -9,15 +9,12 @@
    <p><a href="<?php echo $GLOBALS['db']->config->baseUrl;?>administrator.php">Home</a></p> &gt; <h2>Deceduti</h2>
 </div>
 <a class="actions add" title="Aggiungi" href="<?php echo $GLOBALS['db']->config->baseUrl;?>administrator.php?task=beloved&amp;action=edit">Aggiungi</a>
-<table id="belovedT">
+<table id="graveyardT">
    	<thead>
 		<tr>
 			<th data-bSortable="false" data-sName="id" data-bVisible="false">Id</th>
-			<th data-sName="first_name" >Nome</th>
-                        <th data-sName="last_name" >Cognome</th>
-                        <th data-sName="description" >Denominazione</th>
-                        <th data-sName="date_of_birth" >Data di nascita</th>
-                        <th data-sName="date_of_death" >Data di decesso</th>
+			<th data-sName="name" >Nome</th>
+                        <th data-sName="municipality" >Comune</th>
                         <th data-bSortable="false" data-sName="actions" >Azioni</th>
 		</tr>
 	</thead>
@@ -30,10 +27,7 @@
 		<tr>
                         <th>Id</th>
 			<th>Nome</th>
-                        <th>Cognome</th>
-                        <th>Denominazione</th>
-                        <th>Data di nascita</th>
-                        <th>Data di decesso</th>
+                        <th>Comune</th>
                         <th>Azioni</th>
 		</tr>
 	</tfoot>
