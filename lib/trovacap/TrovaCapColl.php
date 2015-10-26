@@ -1,13 +1,13 @@
 <?php
-namespace comuni;
+namespace trovacap;
 /**
  * Deceased Coll Class
  *
  * @author caiofior
  */
-class ComuniColl extends \ContentColl {
+class TrovaCapColl extends \ContentColl {
       public function __construct($db) {
-         parent::__construct(new \comuni\Comuni($db));
+         parent::__construct(new \trovacap\TrovaCap($db));
       }
       /**
       * Customizes select statement
@@ -16,10 +16,6 @@ class ComuniColl extends \ContentColl {
       * @return Zend_Db_Select Select is expected
       */
     protected function customSelect( \Zend\Db\Sql\Select $select,array $criteria ) {
-        $select ->columns(array('*',
-                'provincia_sigla' => new \Zend\Db\Sql\Predicate\Expression('
-                ( SELECT `provincia_sigla` FROM `province`  WHERE `province`.`provincia_cod`=`comuni`.`provincia_cod`) ')
-                ));
        $select = $this->setFilter($select,$criteria);
        return $select;
     }
@@ -45,7 +41,7 @@ class ComuniColl extends \ContentColl {
      */
     private function setFilter ($select,$criteria) {
        if (array_key_exists('sSearch', $criteria) && $criteria['sSearch'] != '') {
-          $select->where(' ( `denominazione_it` LIKE "'.addslashes($criteria['sSearch']).'%" OR `denominazione_de` LIKE "'.addslashes($criteria['sSearch']).'%") ');
+          $select->where(' ( `comu_cap` LIKE "'.addslashes($criteria['sSearch']).'%" OR `com2_cap` LIKE "'.addslashes($criteria['sSearch']).'%" OR `fraz_cap` LIKE "'.addslashes($criteria['sSearch']).'%" OR `fra2_cap` LIKE "'.addslashes($criteria['sSearch']).'%") ');
        }
       return $select;
     }

@@ -1,5 +1,5 @@
 <?php
-namespace mementomei;
+namespace trovacap;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -30,7 +30,7 @@ class Autoload {
            require __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'content'.DIRECTORY_SEPARATOR.'Autoload.php';
            \content\Autoload::getInstance();
        }
-             
+       
       $firePhpDir = $GLOBALS['db']->baseDir.'/lib/firephp/lib/FirePHPCore';
       if (!class_exists('FirePHP') && is_dir($firePhpDir)) {
          require $firePhpDir.'/FirePHP.class.php';
@@ -46,14 +46,9 @@ class Autoload {
          $class = __CLASS__;
          self::$instance = new $class();
       }
-      require __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'geoPHP'.DIRECTORY_SEPARATOR.'geoPHP.inc';
       
-      require __DIR__.DIRECTORY_SEPARATOR.'Beloved.php';
-      require __DIR__.DIRECTORY_SEPARATOR.'BelovedColl.php';
-      require __DIR__.DIRECTORY_SEPARATOR.'agency'.DIRECTORY_SEPARATOR.'Agency.php';
-      require __DIR__.DIRECTORY_SEPARATOR.'agency'.DIRECTORY_SEPARATOR.'AgencyColl.php';
-      require __DIR__.DIRECTORY_SEPARATOR.'agency'.DIRECTORY_SEPARATOR.'Graveyard.php';
-      require __DIR__.DIRECTORY_SEPARATOR.'agency'.DIRECTORY_SEPARATOR.'GraveyardColl.php';
+      require __DIR__.DIRECTORY_SEPARATOR.'TrovaCap.php';
+      require __DIR__.DIRECTORY_SEPARATOR.'TrovaCapColl.php';
       return self::$instance;
    }
 }

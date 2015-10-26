@@ -38,19 +38,19 @@ case 'edit':
             array_key_exists('submit', $_REQUEST)
       ) {
       if (!array_key_exists('description', $_REQUEST) ||$_REQUEST['description']=='') {
-          $this->addValidationMessage('description','la denominazione è obbligatoria');
+          $this->addValidationMessage('description','La denominazione è obbligatoria');
       }
       $date = new \DateTime();
       if (!array_key_exists('date_of_birth', $_REQUEST) ||$_REQUEST['date_of_birth']!='') {
           $dateOfBirth = $date->createFromFormat('Y-m-d',$_REQUEST['date_of_birth']);
           if(!is_object($dateOfBirth) || $dateOfBirth->format('Y-m-d') != $_REQUEST['date_of_birth']) {
-               $this->addValidationMessage('date_of_birth','la data di nascita è errata (formato 1930-03-31)');
+               $this->addValidationMessage('date_of_birth','La data di nascita è errata (formato 1930-03-31)');
           }
       }
       if (!array_key_exists('date_of_death', $_REQUEST) ||$_REQUEST['date_of_death']!='') {
           $dateOfDeath = $date->createFromFormat('Y-m-d',$_REQUEST['date_of_death']);
           if(!is_object($dateOfDeath) || $dateOfDeath->format('Y-m-d') != $_REQUEST['date_of_death']) {
-               $this->addValidationMessage('date_of_death','la data di nascita è errata (formato 2010-03-31)');
+               $this->addValidationMessage('date_of_death','La data di nascita è errata (formato 2010-03-31)');
           }
       }
       if (
@@ -58,7 +58,7 @@ case 'edit':
               isset($dateOfDeath) && is_object($dateOfDeath) &&
               $dateOfBirth > $dateOfDeath
         ) {
-            $this->addValidationMessage('date_of_birth','la data di nascita è successiva alla data di decesso');
+            $this->addValidationMessage('date_of_birth','La data di nascita è successiva alla data di decesso');
         }
             
       $beloved = new \mementomei\Beloved($GLOBALS['db']);

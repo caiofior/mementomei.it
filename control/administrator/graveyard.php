@@ -15,7 +15,7 @@ if (array_key_exists('sEcho', $_REQUEST)) {
          foreach($columns as $column) {
             $data = $graveyard->getRawData($column);
             if ($column == 'actions') {
-               $data = '<a class="actions modify" title="Modifica" href="?task=beloved&amp;action=edit&amp;id='.$graveyard->getData('id').'">Modifica</a><a class="actions delete" title="Cancella" href="?task=beloved&amp;action=delete&amp;id='.$graveyard->getData('id').'">Cancella</a>';
+               $data = '<a class="actions modify" title="Modifica" href="?task=graveyard&amp;action=edit&amp;id='.$graveyard->getData('id').'">Modifica</a><a class="actions delete" title="Cancella" href="?task=beloved&amp;action=delete&amp;id='.$graveyard->getData('id').'">Cancella</a>';
             } 
             $row[] = $data;     
          }
@@ -31,52 +31,33 @@ if (!array_key_exists('action',$_REQUEST)) {
 switch ($_REQUEST['action']) {
 case 'edit':
    $this->getTemplate()->setBlock('header','administrator/header.phtml'); 
-   $this->getTemplate()->setBlock('middle','administrator/beloved/edit.phtml');
-   $this->getTemplate()->setBlock('footer','administrator/beloved/footer.phtml');  
+   $this->getTemplate()->setBlock('middle','administrator/graveyard/edit.phtml');
+   $this->getTemplate()->setBlock('footer','administrator/graveyard/footer.phtml');  
    if (
             array_key_exists('xhrValidate', $_REQUEST) ||
             array_key_exists('submit', $_REQUEST)
       ) {
-      if (!array_key_exists('description', $_REQUEST) ||$_REQUEST['description']=='') {
-          $this->addValidationMessage('description','la denominazione è obbligatoria');
+      if (!array_key_exists('name', $_REQUEST) ||$_REQUEST['name']=='') {
+          $this->addValidationMessage('name','Il nome è obbligatorio');
       }
-      $date = new \DateTime();
-      if (!array_key_exists('date_of_birth', $_REQUEST) ||$_REQUEST['date_of_birth']!='') {
-          $dateOfBirth = $date->createFromFormat('Y-m-d',$_REQUEST['date_of_birth']);
-          if(!is_object($dateOfBirth) || $dateOfBirth->format('Y-m-d') != $_REQUEST['date_of_birth']) {
-               $this->addValidationMessage('date_of_birth','la data di nascita è errata (formato 1930-03-31)');
-          }
-      }
-      if (!array_key_exists('date_of_death', $_REQUEST) ||$_REQUEST['date_of_death']!='') {
-          $dateOfDeath = $date->createFromFormat('Y-m-d',$_REQUEST['date_of_death']);
-          if(!is_object($dateOfDeath) || $dateOfDeath->format('Y-m-d') != $_REQUEST['date_of_death']) {
-               $this->addValidationMessage('date_of_death','la data di nascita è errata (formato 2010-03-31)');
-          }
-      }
-      if (
-              isset($dateOfBirth) && is_object($dateOfBirth) && 
-              isset($dateOfDeath) && is_object($dateOfDeath) &&
-              $dateOfBirth > $dateOfDeath
-        ) {
-            $this->addValidationMessage('date_of_birth','la data di nascita è successiva alla data di decesso');
-        }
-            
-      $graveyard = new \mementomei\Beloved($GLOBALS['db']);
+      if (!array_key_exists('city', $_REQUEST) ||$_REQUEST['city']=='') {
+          $this->addValidationMessage('city','La città è obbligatoria');
+      } 
+      $graveyard = new \mementomei\agency\Graveyard($GLOBALS['db']);
       if (array_key_exists('submit', $_REQUEST) && $this->formIsValid()) {
          $graveyard->setData($_REQUEST);
-         $graveyard->setBeloving($_REQUEST['beloving']);
          if (array_key_exists('id', $_REQUEST) && is_numeric($_REQUEST['id'])) {
             $graveyard->update();
          } else {
             $graveyard->insert();
          }
-         header('Location: '.$GLOBALS['db']->config->baseUrl.'administrator.php?task=beloved');
+         header('Location: '.$GLOBALS['db']->config->baseUrl.'administrator.php?task=graveyard');
          exit(); 
       }
    }
    break; 
 case 'delete' :
-   $graveyard = new \mementomei\Beloved($GLOBALS['db']);
+   $graveyard = new \mementomei\agency\Graveyard($GLOBALS['db']);
    if (array_key_exists('id', $_REQUEST) && $_REQUEST['id'] != '') {      
       $graveyard->loadFromId($_REQUEST['id']);
       $graveyard->delete();
@@ -90,7 +71,7 @@ case 'jeditable' :
            array_key_exists('value',$_REQUEST) &&
            strlen($_REQUEST['value']) > 1
        ) {
-         $graveyard = new \mementomei\Beloved($GLOBALS['db']);
+         $graveyard = new \mementomei\agency\Graveyard($GLOBALS['db']);
          $graveyard->loadFromId($_REQUEST['id']);
          $graveyard->setData($_REQUEST['value'], 'name');
          $graveyard->update();
@@ -99,6 +80,48 @@ case 'jeditable' :
          exit;
        }
    break;
+case 'cod_istat_n':
+    if (!class_exists('comuni\Autoload')) {
+        require __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'comuni'.DIRECTORY_SEPARATOR.'Autoload.php';
+        \comuni\Autoload::getInstance();
+    }
+    $comuniColl = new \comuni\ComuniColl($GLOBALS['db']);
+    $comuniColl->loadAll(array('sSearch'=>$_REQUEST['term']));
+    $result = array();
+    foreach ($comuniColl->getItems() as $comuni) {
+       $label =  $comuni->getData('denominazione_it');
+       if ($comuni->getData('denominazione_de') != '') {
+           $label .= ' - '.$comuni->getData('denominazione_de');
+       }
+       $label .= ' ('.$comuni->getRawData('provincia_sigla').')';
+       $result[] = array(
+           'label'=>$label,
+           'value'=>$comuni->getData('cod_istat_n')
+       );
+    }
+    header('Expires: '.gmdate('D, d M Y H:i:s \G\M\T', time() + 60*60*24));
+    header('Content-Type: application/json');
+    echo json_encode($result);
+    exit;
+    break;
+case 'cap':
+    if (!class_exists('trovacap\Autoload')) {
+        require __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'trovacap'.DIRECTORY_SEPARATOR.'Autoload.php';
+        \trovacap\Autoload::getInstance();
+    }
+    $trovaCapColl = new \trovacap\TrovaCapColl($GLOBALS['db']);
+    $trovaCapColl->loadAll(array('sSearch'=>$_REQUEST['city']));
+    $result = array();
+    foreach ($trovaCapColl->getItems() as $trovaCap) {
+       $result[] = array(
+           'value'=>$trovaCap->getData('capi_cap')
+       );
+    }
+    header('Expires: '.gmdate('D, d M Y H:i:s \G\M\T', time() + 60*60*24));
+    header('Content-Type: application/json');
+    echo json_encode($result);
+    exit;
+    break;
 default:
    $this->getTemplate()->setBlock('header','administrator/header.phtml'); 
    $this->getTemplate()->setBlock('middle','administrator/graveyard/list.phtml');

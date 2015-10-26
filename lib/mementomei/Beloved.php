@@ -98,16 +98,18 @@ class Beloved extends \Content
      * @return \login\user\ProfileColl()
      */
     public function getBelovingColl() {
-        $resultSet = $this->db->query('SELECT `profile`.* FROM `profile` 
-                LEFT JOIN `beloved_beloving` ON `beloved_beloving`.`profile_id`=`profile`.`id`
-                WHERE `beloved_id`=' . intval($this->data['id'])
-                    , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
         $belovingColl = new \login\user\ProfileColl($this->db);
-        $beloving = new \login\user\Profile($this->db);
-        foreach ($resultSet->toArray() as $belovingData) {
-            $newBeloving = clone $beloving;
-            $newBeloving->setData($belovingData);
-            $belovingColl->appendItem($newBeloving);
+        if (array_key_exists('id', $this->data) && intval($this->data['id']) >0) {
+            $resultSet = $this->db->query('SELECT `profile`.* FROM `profile` 
+                    LEFT JOIN `beloved_beloving` ON `beloved_beloving`.`profile_id`=`profile`.`id`
+                    WHERE `beloved_id`=' . intval($this->data['id'])
+                        , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+            $beloving = new \login\user\Profile($this->db);
+            foreach ($resultSet->toArray() as $belovingData) {
+                $newBeloving = clone $beloving;
+                $newBeloving->setData($belovingData);
+                $belovingColl->appendItem($newBeloving);
+            }
         }
         return $belovingColl;
     }

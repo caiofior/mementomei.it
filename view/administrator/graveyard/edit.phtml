@@ -1,0 +1,64 @@
+<?php if($GLOBALS['db']->config->useCDN === true) : ?>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<?php else : ?>
+<link rel="stylesheet" href="<?php echo $GLOBALS['db']->config->baseUrl;?>js/jqueryui/themes/base/jquery-ui.min.css">
+<?php endif;
+$graveyard = new \mementomei\agency\Graveyard($GLOBALS['db']);
+if (array_key_exists('id', $_REQUEST)) {
+   $graveyard->loadFromId($_REQUEST['id']);
+} else {
+   $graveyard->setData($_REQUEST);
+}
+?>
+<div id="breadcrump">
+   <p><a href="<?php echo $GLOBALS['db']->config->baseUrl;?>administrator.php">Home</a></p> &gt; <p><a href="<?php echo $GLOBALS['db']->config->baseUrl;?>administrator.php?task=deceased">Elenco defunti</a></p> &gt; <h2>Modifica cimitero</h2>
+</div>
+<form method="post" action="#">
+   <input type="hidden" id="id" name="id" value="<?php echo $graveyard->getData('id')?>">
+   <div>
+   <label for="name">Nome</label>
+   <input id="name" name="name" value="<?php echo $graveyard->getData('name')?>" >
+   </div>
+   <div>
+   <label for="description">Descrizione</label>
+   <textarea id="description" name="description"><?php echo $graveyard->getData('description')?></textarea>
+   </div>
+   <div>
+   <label for="toponym">Toponimo</label>
+   <input id="toponym" name="toponym" value="<?php echo $graveyard->getData('toponym')?>" >
+   <label for="address">Indirizzo</label>
+   <input id="address" name="address" value="<?php echo $graveyard->getData('address')?>" >
+   <label for="civic_number">N°</label>
+   <input id="civic_number" name="civic_number" value="<?php echo $graveyard->getData('civic_number')?>" >
+   </div>
+   <div>
+   <label for="village">Località</label>
+   <input id="village" name="village" value="<?php echo $graveyard->getData('village')?>" >
+   <label for="cap">CAP</label>
+   <input id="cap" name="cap" value="<?php echo $graveyard->getData('cap')?>" >
+   <label for="city">Città</label>
+   <input id="city" name="city" value="<?php echo $graveyard->getData('city')?>" >
+   <label for="province_code">Prov.</label>
+   <input id="province_code" name="province_code" value="<?php echo $graveyard->getData('province_code')?>" >
+   <input type="hidden" id="cod_istat_n" name="cod_istat_n" value="<?php echo $graveyard->getData('cod_istat_n')?>" >
+   </div>
+   <div>
+   <label for="phone">Telefono</label>
+   <input type="tel" id="phone" name="phone" value="<?php echo $graveyard->getData('phone')?>" >
+   </div>
+   <div>
+   <label for="fax">Fax</label>
+   <input type="tel" id="fax" name="fax" value="<?php echo $graveyard->getData('fax')?>" >
+   </div>
+   <div>
+   <label for="email">E-mail</label>
+   <input type="email" id="email" name="email" value="<?php echo $graveyard->getData('email')?>" >
+   </div>
+   <div>
+   <p>Creato il:<?php echo $graveyard->getData('creation_datetime')?></p>
+   <p>Aggiornato il:<?php echo $graveyard->getData('change_datetime')?></p>
+   <div>
+      <input type="submit" name="submit" value="Salva">
+   </div>
+</form>
+
