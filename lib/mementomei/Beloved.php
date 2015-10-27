@@ -113,6 +113,15 @@ class Beloved extends \Content
         }
         return $belovingColl;
     }
+    /**
+     * Gets associated agency collection
+     * @return \mementomei\agency\AgencyColl
+     */
+    public function getAgencyColl() {
+        $agencyColl = new \mementomei\agency\AgencyColl($this->db);
+        $agencyColl->loadAll(array('beloved_id'=>$this->data['id']));
+        return $agencyColl;
+    }
    /**
      * Sets teh regions associated with a taxa
      * @param array $belovings

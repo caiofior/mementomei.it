@@ -80,6 +80,34 @@ if (array_key_exists('id', $_REQUEST)) {
     <?php endif;?>        
     </div>
     </div>
+    <div>
+    <p><h5>Agenzie e cimiteri</h5></p>
+    <div id="agency_list">
+    <?php $agencyColl = $beloved->getAgencyColl();
+     if ($agencyColl->count() == 0) : ?>
+        <div>Nessun agenzia reperita</div>
+    <?php else: ?>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-6">Nome</div>
+            <div class="col-xs-6">Email</div>
+        </div>
+    <?php foreach($agencyColl->getItems() as $agency) : ?>
+    <div class="row">
+        <div class="col-xs-6">  
+        <a class="actions delete removedAgency" href="#" data-id="<?php echo $agency->getData('id'); ?>">Aggiungi</a>
+        <?php echo $agency->getData('name'); ?>
+        <?php echo $agency->getData('city'); ?>
+        </div>
+        <div class="col-xs-6">
+        <?php echo $agency->getData('email'); ?>
+        </div>
+    </div>
+    <?php endforeach; ?>
+    </div>
+    <?php endif;?>        
+    </div>
+    </div>
     </div>
    <div>
       <input type="submit" name="submit" value="Salva">

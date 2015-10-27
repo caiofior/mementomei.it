@@ -5,7 +5,7 @@ namespace mementomei\agency;
  *
  * @author caiofior
  */
-abstract class Agency extends \Content
+class Agency extends \Content
 {
     /**
      * GeoPHP Point reference
