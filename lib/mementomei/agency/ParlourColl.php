@@ -1,13 +1,13 @@
 <?php
-namespace trovacap;
+namespace mementomei\agency;
 /**
  * Deceased Coll Class
  *
  * @author caiofior
  */
-class TrovaCapColl extends \ContentColl {
+class ParlourColl extends \mementomei\agency\AgencyColl {
       public function __construct($db) {
-         parent::__construct(new \trovacap\TrovaCap($db));
+         parent::__construct(new \mementomei\agency\Parlour($db));
       }
       /**
       * Customizes select statement
@@ -17,7 +17,6 @@ class TrovaCapColl extends \ContentColl {
       */
     protected function customSelect( \Zend\Db\Sql\Select $select,array $criteria ) {
        $select = $this->setFilter($select,$criteria);
-       $select->group('capi_cap');
        return $select;
     }
      /**
@@ -41,8 +40,9 @@ class TrovaCapColl extends \ContentColl {
      * @return \Zend\Db\Sql\Select
      */
     private function setFilter ($select,$criteria) {
+       $select->where('`type` = "parlour"');
        if (array_key_exists('sSearch', $criteria) && $criteria['sSearch'] != '') {
-          $select->where(' ( `comu_cap` LIKE "'.addslashes($criteria['sSearch']).'%" OR `com2_cap` LIKE "'.addslashes($criteria['sSearch']).'%" OR `fraz_cap` LIKE "'.addslashes($criteria['sSearch']).'%" OR `fra2_cap` LIKE "'.addslashes($criteria['sSearch']).'%") ');
+          $select->where(' ( `first_name` LIKE "%'.addslashes($criteria['sSearch']).'%" OR `last_name` LIKE "%'.addslashes($criteria['sSearch']).'%" OR `description` LIKE "%'.addslashes($criteria['sSearch']).'%" ) ');
        }
       return $select;
     }

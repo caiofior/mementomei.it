@@ -54,6 +54,8 @@ class Autoload {
       require __DIR__.DIRECTORY_SEPARATOR.'agency'.DIRECTORY_SEPARATOR.'AgencyColl.php';
       require __DIR__.DIRECTORY_SEPARATOR.'agency'.DIRECTORY_SEPARATOR.'Graveyard.php';
       require __DIR__.DIRECTORY_SEPARATOR.'agency'.DIRECTORY_SEPARATOR.'GraveyardColl.php';
+      require __DIR__.DIRECTORY_SEPARATOR.'agency'.DIRECTORY_SEPARATOR.'Parlour.php';
+      require __DIR__.DIRECTORY_SEPARATOR.'agency'.DIRECTORY_SEPARATOR.'ParlourColl.php';
       return self::$instance;
    }
 }

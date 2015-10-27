@@ -29,7 +29,7 @@ abstract class Agency extends \Content
            'point'=>new \Zend\Db\Sql\Expression('asText(main_place)')
            ));
        $select->where(array($this->primary=>$id));
-       $data = $this->table->select($this->table->selectWith($select))->current();
+       $data = $this->table->selectWith($select)->current();
        if (is_object($data)) {
             $this->data = $data->getArrayCopy();
             $this->rawData = $this->data;

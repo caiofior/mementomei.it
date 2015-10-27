@@ -40,6 +40,7 @@ class GraveyardColl extends \mementomei\agency\AgencyColl {
      * @return \Zend\Db\Sql\Select
      */
     private function setFilter ($select,$criteria) {
+       $select->where('`type` = "graveyard"'); 
        if (array_key_exists('sSearch', $criteria) && $criteria['sSearch'] != '') {
           $select->where(' ( `first_name` LIKE "%'.addslashes($criteria['sSearch']).'%" OR `last_name` LIKE "%'.addslashes($criteria['sSearch']).'%" OR `description` LIKE "%'.addslashes($criteria['sSearch']).'%" ) ');
        }
