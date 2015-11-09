@@ -88,7 +88,7 @@ class Beloved extends \Content
     */
    private function updateCoordinates() {
        if (is_object($this->point) && $this->point instanceof \Point) {
-           $this->data['main_place']=new \Zend\Db\Sql\Expression('PointFromText("POINT('.$this->point->x().' '.$this->point->y().')")');
+           $this->data['main_place']=new \Zend\Db\Sql\Expression('PointFromText("POINT('.$this->point->y().' '.$this->point->x().')")');
        } else {
            $this->data['main_place']=new \Zend\Db\Sql\Expression('PointFromText("POINT(0 0)")');
        }
