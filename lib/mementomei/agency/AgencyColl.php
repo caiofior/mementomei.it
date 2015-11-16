@@ -6,9 +6,13 @@ namespace mementomei\agency;
  * @author caiofior
  */
 class AgencyColl extends \ContentColl {
-    public function __construct($db) {
-         parent::__construct(new \mementomei\agency\Agency($db));
-    }
+      public function __construct($db) {
+           if (get_class($this) == __CLASS__) {
+               parent::__construct(new \mementomei\agency\Agency($db));
+           } else {
+                parent::__construct($db);
+           }
+      }
       /**
       * Customizes select statement
       * @param Zend_Db_Select $select Zend Db Select
@@ -39,7 +43,7 @@ class AgencyColl extends \ContentColl {
      * @param array $criteria
      * @return \Zend\Db\Sql\Select
      */
-    private function setFilter ($select,$criteria) {
+    protected function setFilter ($select,$criteria) {
        if (array_key_exists('beloved_id', $criteria) && $criteria['beloved_id'] != '') {
            $select->where(' id IN (SELECT `agency_id` FROM `beloved_agency` WHERE `beloved_id`= '.intval($criteria['beloved_id']).') ');
        }

@@ -1,0 +1,22 @@
+<?php if ($graveyardColl->count() == 0) : ?>
+<div>Nessun cimitero reperito</div>
+<?php else: ?>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-6">Nome</div>
+        <div class="col-xs-6">Email</div>
+    </div>
+<?php foreach($graveyardColl->getItems() as $graveyard) : ?>
+<div class="row">
+    <div class="col-xs-6">  
+    <a class="actions add addGraveyard" href="#" data-id="<?php echo $graveyard->getData('id'); ?>">Aggiungi</a>
+    <?php echo $graveyard->getData('name'); ?>
+    <?php echo $graveyard->getData('city'); ?>
+    </div>
+    <div class="col-xs-6">
+    <?php echo $graveyard->getData('email'); ?>
+    </div>
+</div>
+<?php endforeach; ?>
+</div>
+<?php endif;

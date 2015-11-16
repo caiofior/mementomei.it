@@ -66,8 +66,8 @@ if (array_key_exists('id', $_REQUEST)) {
         </div>
     <?php foreach($belovingColl->getItems() as $beloving) : ?>
     <div class="row">
-        <div class="col-xs-6">  
-        <a class="actions delete removedBeloved" href="#" data-id="<?php echo $beloving->getData('id'); ?>">Aggiungi</a>
+        <div class="col-xs-6">
+            <a class="actions delete removedBeloved" href="#"><input type="hidden" name="beloving[]" value="<?php echo $beloving->getData('id'); ?>"></a>
         <?php echo $beloving->getData('first_name'); ?>
         <?php echo $beloving->getData('last_name'); ?>
         </div>
@@ -81,26 +81,35 @@ if (array_key_exists('id', $_REQUEST)) {
     </div>
     </div>
     <div>
-    <p><h5>Agenzie e cimiteri</h5></p>
-    <div id="agency_list">
-    <?php $agencyColl = $beloved->getAgencyColl();
-     if ($agencyColl->count() == 0) : ?>
-        <div>Nessun agenzia reperita</div>
+    <p><h5>Associa cimitero</h5></p>
+        <div>
+            <label for="graveyard_search">Cerca in nome e città</label>
+            <input type="search" id="graveyard_search" data-url="<?php echo $GLOBALS['db']->config->baseUrl;?>administrator.php?task=beloved&amp;action=graveyard_search"/>
+            <img style="display: none;" src="<?php echo $GLOBALS['db']->config->baseUrl;?>/style/general/images/ajax-loader.gif">
+            <div id="graveyard_search_list"></div>
+        </div>
+    </div>
+    <div>
+    <p><h5>Cimiteri</h5></p>
+    <div id="graveyard_list">
+    <?php $graveyardColl = $beloved->getGraveyardColl();
+     if ($graveyardColl->count() == 0) : ?>
+        <div>Nessun cimitero</div>
     <?php else: ?>
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-6">Nome</div>
             <div class="col-xs-6">Email</div>
         </div>
-    <?php foreach($agencyColl->getItems() as $agency) : ?>
+    <?php foreach($graveyardColl->getItems() as $graveyard) : ?>
     <div class="row">
         <div class="col-xs-6">  
-        <a class="actions delete removedAgency" href="#" data-id="<?php echo $agency->getData('id'); ?>">Aggiungi</a>
-        <?php echo $agency->getData('name'); ?>
-        <?php echo $agency->getData('city'); ?>
+            <a class="actions delete removedGraveyard" href="#"><input type="hidden" name="graveyard[]" value="<?php echo $graveyard->getData('id'); ?>"/></a>
+        <?php echo $graveyard->getData('name'); ?>
+        <?php echo $graveyard->getData('city'); ?>
         </div>
         <div class="col-xs-6">
-        <?php echo $agency->getData('email'); ?>
+        <?php echo $graveyard->getData('email'); ?>
         </div>
     </div>
     <?php endforeach; ?>

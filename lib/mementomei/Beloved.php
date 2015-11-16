@@ -122,15 +122,35 @@ class Beloved extends \Content
         $agencyColl->loadAll(array('beloved_id'=>$this->data['id']));
         return $agencyColl;
     }
-   /**
-     * Sets teh regions associated with a taxa
+    /**
+     * Gets associated graveyard collection
+     * @return \mementomei\agency\GraveyardColl
+     */
+    public function getGraveyardColl() {
+        $graveyardColl = new \mementomei\agency\GraveyardColl($this->db);
+        $graveyardColl->loadAll(array('beloved_id'=>$this->data['id']));
+        return $graveyardColl;
+    }
+    /**
+     * Gets associated parlour collection
+     * @return \mementomei\agency\ParlourColl
+     */
+    public function getParlourColl() {
+        $parlourColl = new \mementomei\agency\ParlourColl($this->db);
+        $parlourColl->loadAll(array('beloved_id'=>$this->data['id']));
+        return $parlourColl;
+    }
+    /**
+     * Sets the beloving associated with beloved
      * @param array $belovings
      */
     public function setBeloving(array $belovings) {
-        if (array_key_exists('id', $this->data) && $this->data['id'] != '')
-            $this->db->query('DELETE FROM `beloved_beloving` 
-              WHERE `beloved_id`=' . intval($this->data['id'])
-                    , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+        if (!array_key_exists('id', $this->data) && $this->data['id'] == '') {
+            return;
+        }
+        $this->db->query('DELETE FROM `beloved_beloving` 
+          WHERE `beloved_id`=' . intval($this->data['id'])
+                , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
         foreach ($belovings as $beloving) {
             $this->db->query('INSERT INTO `beloved_beloving` 
               (`beloved_id`,`profile_id`)
@@ -138,5 +158,41 @@ class Beloved extends \Content
               (' . intval($this->data['id']) . ',"' . addslashes($beloving) . '")'
                     , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
         }
+    }
+    /**
+     * Sets the graveyard associated with beloved
+     * @param array $greveyards
+     */
+    public function setGraveyard(array $greveyards) {
+        $this->setAgencies($greveyards);
+    }
+    /**
+     * Sets the agency associated with beloved
+     * @param array $agencies
+     */
+    public function setAgencies(array $agencies) {
+        if (!array_key_exists('id', $this->data) || $this->data['id'] == ''){
+            return;
+        }
+        $storedAgencies = array();
+        $storedAgencyResultset = $this->db->query('SELECT `agency_id` FROM `beloved_agency` 
+          WHERE `beloved_id`=' . intval($this->data['id'])
+                , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+        while ($storedAgencyResultset->valid()){
+            $storedAgencies[] = $storedAgencyResultset->current()->agency_id;
+            $storedAgencyResultset->next();
+        }
+        foreach(array_diff($storedAgencies, $agencies) as $agency) {
+          $this->db->query('DELETE FROM `beloved_agency` 
+          WHERE `beloved_id`=' . intval($this->data['id']).' AND `agency_id`='.intval($agency)
+                , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+        }        
+        foreach (array_diff($agencies,$storedAgencies)  as $agency) {
+            $this->db->query('INSERT INTO `beloved_agency` 
+              (`beloved_id`,`agency_id`,`datetime`)
+              VALUES
+              (' . intval($this->data['id']) . ',"' . addslashes($agency) . '",NOW())'
+                    , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+        }        
     }
 }

@@ -39,11 +39,8 @@ class ParlourColl extends \mementomei\agency\AgencyColl {
      * @param array $criteria
      * @return \Zend\Db\Sql\Select
      */
-    private function setFilter ($select,$criteria) {
+    protected function setFilter ($select,$criteria) {
        $select->where('`type` = "parlour"');
-       if (array_key_exists('sSearch', $criteria) && $criteria['sSearch'] != '') {
-          $select->where(' ( `name` LIKE "%'.addslashes($criteria['sSearch']).'%" OR `city` LIKE "%'.addslashes($criteria['sSearch']).'%" OR `description` LIKE "%'.addslashes($criteria['sSearch']).'%" ) ');
-       }
-      return $select;
+       return parent::setFilter($select,$criteria);
     }
 }

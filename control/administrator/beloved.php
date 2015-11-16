@@ -64,7 +64,15 @@ case 'edit':
       $beloved = new \mementomei\Beloved($GLOBALS['db']);
       if (array_key_exists('submit', $_REQUEST) && $this->formIsValid()) {
          $beloved->setData($_REQUEST);
+         if (!array_key_exists('beloving', $_REQUEST)) {
+             $_REQUEST['beloving']=array();
+         }
          $beloved->setBeloving($_REQUEST['beloving']);
+         if (!array_key_exists('graveyard', $_REQUEST)) {
+             $_REQUEST['graveyard']=array();
+         }
+         $beloved->setGraveyard($_REQUEST['graveyard']);
+         
          if (array_key_exists('id', $_REQUEST) && is_numeric($_REQUEST['id'])) {
             $beloved->update();
          } else {
@@ -105,6 +113,14 @@ case 'beloving_search' :
     $_REQUEST['iDisplayLength']=10;
     $profileColl->loadAll($_REQUEST);
     require __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'view'.DIRECTORY_SEPARATOR.'administrator'.DIRECTORY_SEPARATOR.'beloved'.DIRECTORY_SEPARATOR.'belovingSearch.phtml';
+    exit;
+   break;
+case 'graveyard_search' :
+    $graveyardColl = new \mementomei\agency\GraveyardColl($GLOBALS['db']);
+    $_REQUEST['iDisplayStart']=0;
+    $_REQUEST['iDisplayLength']=10;
+    $graveyardColl->loadAll($_REQUEST);
+    require __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'view'.DIRECTORY_SEPARATOR.'administrator'.DIRECTORY_SEPARATOR.'beloved'.DIRECTORY_SEPARATOR.'graveyardSearch.phtml';
     exit;
    break;
 default:

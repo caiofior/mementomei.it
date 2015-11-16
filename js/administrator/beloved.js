@@ -66,8 +66,22 @@ $(document).ready(function() {
                 )
             );
             $("input[type=date]").datepicker();
+            $("#graveyard_search").keyup(function(){
+                $("#graveyard_search ~ img").show();
+                $.get(
+                    $(this).data("url"),
+                    {
+                        sSearch:$(this).val()
+                    },
+                    function(data){
+                        $("#graveyard_search_list").html(data);
+                        $("#graveyard_search ~ img").hide();
+                        graveyardListManagement();
+                    }
+                );
+            });
             $("#beloving_search").keyup(function(){
-                $("#beloving_sprite").show();
+                $("#beloving_search ~ img").show();
                 $.get(
                     $(this).data("url"),
                     {
@@ -75,13 +89,30 @@ $(document).ready(function() {
                     },
                     function(data){
                         $("#beloving_search_list").html(data);
-                        $("#beloving_sprite").hide();
+                        $("#beloving_search ~ img").hide();
                         belovedListManagement();
                     }
                 );
             });
+            graveyardListManagement();
             belovedListManagement();
-        }    
+        }
+        var graveyardListManagement = function() {
+            $(".addGraveyard").click(function (e) {
+                var el = $(this).closest(".row").detach();
+                var id = el.find(".actions.add").data("id");
+                el.find(".actions.add").removeClass("add").addClass("removedGraveyard").addClass("delete").after("<input type='hidden' name='graveyard[]' value='"+id+"'/>");
+                $("#graveyard_list").append(el);
+                graveyardListManagement();
+                e.preventDefault();
+            });
+            $(".removedGraveyard").click(function (e) {
+                $(this).closest(".row").empty();
+                graveyardListManagement();
+                e.preventDefault();
+            }); 
+            
+        }
         var belovedListManagement = function() {
             $(".addBeloved").click(function (e) {
                 var el = $(this).closest(".row").detach();
