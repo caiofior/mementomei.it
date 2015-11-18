@@ -117,6 +117,43 @@ if (array_key_exists('id', $_REQUEST)) {
     <?php endif;?>        
     </div>
     </div>
+    <div>
+    <p><h5>Associa agenzia</h5></p>
+        <div>
+            <label for="parlour_search">Cerca in nome e città</label>
+            <input type="search" id="parlour_search" data-url="<?php echo $GLOBALS['db']->config->baseUrl;?>administrator.php?task=beloved&amp;action=parlour_search"/>
+            <img style="display: none;" src="<?php echo $GLOBALS['db']->config->baseUrl;?>/style/general/images/ajax-loader.gif">
+            <div id="parlour_search_list"></div>
+        </div>
+    </div>
+    <div>
+    <p><h5>Agenzie</h5></p>
+    <div id="parlour_list">
+    <?php $parlourColl = $beloved->getParlourColl();
+     if ($parlourColl->count() == 0) : ?>
+        <div>Nessun agenzia</div>
+    <?php else: ?>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-6">Nome</div>
+            <div class="col-xs-6">Email</div>
+        </div>
+    <?php foreach($parlourColl->getItems() as $parlour) : ?>
+    <div class="row">
+        <div class="col-xs-6">  
+            <a class="actions delete removedParlour" href="#"><input type="hidden" name="parlour[]" value="<?php echo $parlour->getData('id'); ?>"/></a>
+        <?php echo $parlour->getData('name'); ?>
+        <?php echo $parlour->getData('city'); ?>
+        </div>
+        <div class="col-xs-6">
+        <?php echo $parlour->getData('email'); ?>
+        </div>
+    </div>
+    <?php endforeach; ?>
+    </div>
+    <?php endif;?>        
+    </div>
+    </div>
     </div>
    <div>
       <input type="submit" name="submit" value="Salva">

@@ -164,24 +164,50 @@ class Beloved extends \Content
      * @param array $greveyards
      */
     public function setGraveyard(array $greveyards) {
-        $this->setAgencies($greveyards);
-    }
-    /**
-     * Sets the agency associated with beloved
-     * @param array $agencies
-     */
-    public function setAgencies(array $agencies) {
-        if (!array_key_exists('id', $this->data) || $this->data['id'] == ''){
-            return;
-        }
         $storedAgencies = array();
         $storedAgencyResultset = $this->db->query('SELECT `agency_id` FROM `beloved_agency` 
-          WHERE `beloved_id`=' . intval($this->data['id'])
+          WHERE (SELECT `type` FROM `agency` WHERE `id` = `beloved_agency`.`agency_id`) = "graveyard" AND `beloved_id`=' . intval($this->data['id'])
                 , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
         while ($storedAgencyResultset->valid()){
             $storedAgencies[] = $storedAgencyResultset->current()->agency_id;
             $storedAgencyResultset->next();
         }
+        $this->setAgencies($greveyards,$storedAgencies);
+    }
+    /**
+     * Sets the parlour associated with beloved
+     * @param array $parlour
+     */
+    public function setParlour(array $parlours) {
+        $storedAgencies = array();
+        $storedAgencyResultset = $this->db->query('SELECT `agency_id` FROM `beloved_agency` 
+          WHERE (SELECT `type` FROM `agency` WHERE `id` = `beloved_agency`.`agency_id`) = "parlour" AND `beloved_id`=' . intval($this->data['id'])
+                , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+        while ($storedAgencyResultset->valid()){
+            $storedAgencies[] = $storedAgencyResultset->current()->agency_id;
+            $storedAgencyResultset->next();
+        }
+        $this->setAgencies($parlours,$storedAgencies);
+    }
+    /**
+     * Sets the agency associated with beloved
+     * @param array $agencies
+     */
+    public function setAgencies(array $agencies,$storedAgencies=null) {
+        if (!array_key_exists('id', $this->data) || $this->data['id'] == ''){
+            return;
+        }
+        if (!is_array($storedAgencies)) {
+            $storedAgencies = array();
+            $storedAgencyResultset = $this->db->query('SELECT `agency_id` FROM `beloved_agency` 
+              WHERE `beloved_id`=' . intval($this->data['id'])
+                    , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+            while ($storedAgencyResultset->valid()){
+                $storedAgencies[] = $storedAgencyResultset->current()->agency_id;
+                $storedAgencyResultset->next();
+            }
+        }
+        
         foreach(array_diff($storedAgencies, $agencies) as $agency) {
           $this->db->query('DELETE FROM `beloved_agency` 
           WHERE `beloved_id`=' . intval($this->data['id']).' AND `agency_id`='.intval($agency)

@@ -1,0 +1,22 @@
+<?php if ($parlourColl->count() == 0) : ?>
+<div>Nessun agenzia reperito</div>
+<?php else: ?>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-6">Nome</div>
+        <div class="col-xs-6">Email</div>
+    </div>
+<?php foreach($parlourColl->getItems() as $parlour) : ?>
+<div class="row">
+    <div class="col-xs-6">  
+    <a class="actions add addParlour" href="#" data-id="<?php echo $parlour->getData('id'); ?>">Aggiungi</a>
+    <?php echo $parlour->getData('name'); ?>
+    <?php echo $parlour->getData('city'); ?>
+    </div>
+    <div class="col-xs-6">
+    <?php echo $parlour->getData('email'); ?>
+    </div>
+</div>
+<?php endforeach; ?>
+</div>
+<?php endif;

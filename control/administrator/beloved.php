@@ -72,6 +72,10 @@ case 'edit':
              $_REQUEST['graveyard']=array();
          }
          $beloved->setGraveyard($_REQUEST['graveyard']);
+         if (!array_key_exists('parlour', $_REQUEST)) {
+             $_REQUEST['parlour']=array();
+         }
+         $beloved->setParlour($_REQUEST['parlour']);
          
          if (array_key_exists('id', $_REQUEST) && is_numeric($_REQUEST['id'])) {
             $beloved->update();
@@ -121,6 +125,14 @@ case 'graveyard_search' :
     $_REQUEST['iDisplayLength']=10;
     $graveyardColl->loadAll($_REQUEST);
     require __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'view'.DIRECTORY_SEPARATOR.'administrator'.DIRECTORY_SEPARATOR.'beloved'.DIRECTORY_SEPARATOR.'graveyardSearch.phtml';
+    exit;
+   break;
+case 'parlour_search' :
+    $parlourColl = new \mementomei\agency\ParlourColl($GLOBALS['db']);
+    $_REQUEST['iDisplayStart']=0;
+    $_REQUEST['iDisplayLength']=10;
+    $parlourColl->loadAll($_REQUEST);
+    require __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'view'.DIRECTORY_SEPARATOR.'administrator'.DIRECTORY_SEPARATOR.'beloved'.DIRECTORY_SEPARATOR.'parlourSearch.phtml';
     exit;
    break;
 default:

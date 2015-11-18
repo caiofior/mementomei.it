@@ -80,6 +80,20 @@ $(document).ready(function() {
                     }
                 );
             });
+            $("#parlour_search").keyup(function(){
+                $("#parlour_search ~ img").show();
+                $.get(
+                    $(this).data("url"),
+                    {
+                        sSearch:$(this).val()
+                    },
+                    function(data){
+                        $("#parlour_search_list").html(data);
+                        $("#parlour_search ~ img").hide();
+                        parlourListManagement();
+                    }
+                );
+            });
             $("#beloving_search").keyup(function(){
                 $("#beloving_search ~ img").show();
                 $.get(
@@ -95,6 +109,7 @@ $(document).ready(function() {
                 );
             });
             graveyardListManagement();
+            parlourListManagement();
             belovedListManagement();
         }
         var graveyardListManagement = function() {
@@ -109,6 +124,22 @@ $(document).ready(function() {
             $(".removedGraveyard").click(function (e) {
                 $(this).closest(".row").empty();
                 graveyardListManagement();
+                e.preventDefault();
+            }); 
+            
+        }
+        var parlourListManagement = function() {
+            $(".addParlour").click(function (e) {
+                var el = $(this).closest(".row").detach();
+                var id = el.find(".actions.add").data("id");
+                el.find(".actions.add").removeClass("add").addClass("removedParlour").addClass("delete").after("<input type='hidden' name='parlour[]' value='"+id+"'/>");
+                $("#parlour_list").append(el);
+                parlourListManagement();
+                e.preventDefault();
+            });
+            $(".removedParlour").click(function (e) {
+                $(this).closest(".row").empty();
+                parlourListManagement();
                 e.preventDefault();
             }); 
             
