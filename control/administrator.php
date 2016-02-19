@@ -22,6 +22,9 @@ switch ($_REQUEST['task']) {
    case 'parlour':
       require __DIR__.DIRECTORY_SEPARATOR.'administrator'.DIRECTORY_SEPARATOR.'parlour.php';    
       break;
+   case 'memento':
+      require __DIR__.DIRECTORY_SEPARATOR.'administrator'.DIRECTORY_SEPARATOR.'memento.php';    
+      break;
    case 'user':
       require __DIR__.DIRECTORY_SEPARATOR.'administrator'.DIRECTORY_SEPARATOR.'user.php';    
       break;
