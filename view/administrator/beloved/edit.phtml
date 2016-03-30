@@ -154,6 +154,50 @@ if (array_key_exists('id', $_REQUEST)) {
     <?php endif;?>        
     </div>
     </div>
+    <div>
+    <p><h5>Associa ricordo</h5></p>
+        <div>
+            <label for="memento_item_search">Cerca in tipo ricordo</label>
+            <input type="search" id="memento_item_search" data-url="<?php echo $GLOBALS['db']->config->baseUrl;?>administrator.php?task=beloved&amp;action=memento_item_search"/>
+            <img style="display: none;" src="<?php echo $GLOBALS['db']->config->baseUrl;?>/style/general/images/ajax-loader.gif">
+            <div id="memento_item_search_list"></div>
+        </div>
+    </div>   
+    <p><h5>Ricordi</h5></p>
+    <div id="memento_item_list">
+    <?php $mementoItemColl = $beloved->getMementoItemColl();
+     if ($mementoItemColl->count() == 0) : ?>
+        <div>Nessun ricordo</div>
+    <?php else: ?>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-6">Nome</div>
+            <div class="col-xs-6">Contenuto</div>
+            <div class="col-xs-6">Data</div>
+        </div>
+    <?php foreach($mementoItemColl->getItems() as $mementoItem) : ?>
+    <div class="row">
+        <div class="col-xs-4">  
+            <a class="actions delete removedMementoItem" href="#">
+                <input type="hidden" name="memento_item_code[]" value="<?php echo $mementoItem->getData('memento_code'); ?>"/>
+                <input type="hidden" name="memento_item_data[]" value="<?php echo $mementoItem->getData('data'); ?>"/>
+                <input type="hidden" name="memento_item_datetime[]" value="<?php echo $mementoItem->getData('datetime'); ?>"/>
+                <input type="hidden" name="memento_item_filename[]" value="<?php echo $mementoItem->getData('filename'); ?>"/>
+            </a>
+        <?php echo $mementoItem->getRawData('name'); ?>
+        </div>
+        <div class="col-xs-4">
+        <?php echo $mementoItem->getData('data'); ?>
+        </div>
+        <div class="col-xs-4">
+        <?php echo $mementoItem->getData('datetime'); ?>
+        </div>
+    </div>
+    <?php endforeach; ?>
+    </div>
+    <?php endif;?>        
+    </div>
+    </div>
     </div>
    <div>
       <input type="submit" name="submit" value="Salva">

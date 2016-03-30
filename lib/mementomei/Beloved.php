@@ -141,6 +141,15 @@ class Beloved extends \Content
         return $parlourColl;
     }
     /**
+     * Gets associated memento collection
+     * @return \mementomei\memento\MenentoColl
+     */
+    public function getMementoItemColl() {
+        $mementoColl = new \mementomei\memento\MementoItemColl($this->db);
+        $mementoColl->loadAll(array('beloved_id'=>$this->data['id']));
+        return $mementoColl;
+    }
+    /**
      * Sets the beloving associated with beloved
      * @param array $belovings
      */
@@ -218,6 +227,43 @@ class Beloved extends \Content
               (`beloved_id`,`agency_id`,`datetime`)
               VALUES
               (' . intval($this->data['id']) . ',"' . addslashes($agency) . '",NOW())'
+                    , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+        }        
+    }
+    /**
+     * Associates memento item to the beloved
+     * @param array $mementoItemId
+     * @param array $mementoItemData
+     * @param array $mementoItemDateTime
+     */
+    public function setMementoItemColl(array $mementoItemCodes,array $mementoItemDatas,array $mementoItemDateTimes=array(),array $mementoItemFilenames=array()) {
+        if (!array_key_exists('id', $this->data) || $this->data['id'] == ''){
+            return;
+        }
+        $this->db->query('DELETE FROM `beloved_memento` 
+          WHERE `beloved_id`=' . intval($this->data['id'])
+                , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+        foreach ($mementoItemCodes as $key=>$mementoItemCode) {
+            $mementoItemData=null;
+            if (array_key_exists($key, $mementoItemDatas)) {
+                $mementoItemData=  addslashes($mementoItemDatas[$key]);    
+            }
+            if ($mementoItemData=='' || $mementoItemCode== '') {
+                continue;
+            }
+            $mementoItemDateTime='NOW()';
+            if (array_key_exists($key, $mementoItemDateTimes) && $mementoItemDateTimes[$key] != '') {
+                $mementoItemDateTime='"'.addslashes($mementoItemDateTimes[$key]).'"';    
+            }
+            $mementoFilename='';
+            if (array_key_exists($key, $mementoItemFilenames) && $mementoItemFilenames[$key] != '') {
+                $mementoFilename='"'.addslashes($mementoItemFilenames[$key]).'"';    
+            }
+            
+            $this->db->query('INSERT INTO `beloved_memento` 
+              (`beloved_id`,`memento_code`,`datetime`,`data`,`filename`)
+              VALUES
+              (' . intval($this->data['id']) . ',"' . addslashes($mementoItemCode) . '",'.$mementoItemDateTime.',"'.$mementoItemData.'","'.$mementoFilename.'")'
                     , \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
         }        
     }

@@ -58,6 +58,8 @@ class Autoload {
       require __DIR__.DIRECTORY_SEPARATOR.'agency'.DIRECTORY_SEPARATOR.'ParlourColl.php';
       require __DIR__.DIRECTORY_SEPARATOR.'memento'.DIRECTORY_SEPARATOR.'Memento.php';
       require __DIR__.DIRECTORY_SEPARATOR.'memento'.DIRECTORY_SEPARATOR.'MementoColl.php';
+      require __DIR__.DIRECTORY_SEPARATOR.'memento'.DIRECTORY_SEPARATOR.'MementoItem.php';
+      require __DIR__.DIRECTORY_SEPARATOR.'memento'.DIRECTORY_SEPARATOR.'MementoItemColl.php';
       return self::$instance;
    }
 }

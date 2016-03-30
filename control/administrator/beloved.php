@@ -76,6 +76,13 @@ case 'edit':
              $_REQUEST['parlour']=array();
          }
          $beloved->setParlour($_REQUEST['parlour']);
+         if (!array_key_exists('memento_item_code', $_REQUEST)) {
+             $_REQUEST['memento_item_code']=array();
+         }
+         if (!array_key_exists('memento_item_data', $_REQUEST)) {
+             $_REQUEST['memento_item_data']=array();
+         }
+         $beloved->setMementoItemColl($_REQUEST['memento_item_code'],$_REQUEST['memento_item_data']);
          
          if (array_key_exists('id', $_REQUEST) && is_numeric($_REQUEST['id'])) {
             $beloved->update();
@@ -133,6 +140,14 @@ case 'parlour_search' :
     $_REQUEST['iDisplayLength']=10;
     $parlourColl->loadAll($_REQUEST);
     require __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'view'.DIRECTORY_SEPARATOR.'administrator'.DIRECTORY_SEPARATOR.'beloved'.DIRECTORY_SEPARATOR.'parlourSearch.phtml';
+    exit;
+   break;
+case 'memento_item_search' :
+    $mementoColl = new \mementomei\memento\MementoColl($GLOBALS['db']);
+    $_REQUEST['iDisplayStart']=0;
+    $_REQUEST['iDisplayLength']=10;
+    $mementoColl->loadAll($_REQUEST);
+    require __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'view'.DIRECTORY_SEPARATOR.'administrator'.DIRECTORY_SEPARATOR.'beloved'.DIRECTORY_SEPARATOR.'mementoSearch.phtml';
     exit;
    break;
 default:

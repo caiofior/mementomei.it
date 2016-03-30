@@ -1,0 +1,22 @@
+<?php if ($mementoColl->count() == 0) : ?>
+<div>Nessun ricordo reperito</div>
+<?php else: ?>
+<div class="missing_memento_data" style="display:none;">Il contenuto del ricordo è obbligatorio</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-6">Nome</div>
+        <div class="col-xs-6">Dati</div>
+    </div>
+<?php foreach($mementoColl->getItems() as $memento) : ?>
+<div class="row">
+    <div class="col-xs-6">
+    <a class="actions add addMementoItem" href="#" data-code="<?php echo $memento->getData('code'); ?>">Aggiungi</a>
+    <?php echo $memento->getData('name'); ?>
+    </div>
+    <div class="col-xs-6">
+        <input name="memento_item_data[]" type="text"/>
+    </div>
+</div>
+<?php endforeach; ?>
+</div>
+<?php endif;

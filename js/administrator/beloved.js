@@ -108,9 +108,24 @@ $(document).ready(function() {
                     }
                 );
             });
+            $("#memento_item_search").keyup(function(){
+                $("#memento_item_search ~ img").show();
+                $.get(
+                    $(this).data("url"),
+                    {
+                        sSearch:$(this).val()
+                    },
+                    function(data){
+                        $("#memento_item_search_list").html(data);
+                        $("#memento_item_search ~ img").hide();
+                        mementoItemListManagement();
+                    }
+                );
+            });
             graveyardListManagement();
             parlourListManagement();
             belovedListManagement();
+            mementoItemListManagement();
         }
         var graveyardListManagement = function() {
             $(".addGraveyard").click(function (e) {
@@ -156,6 +171,33 @@ $(document).ready(function() {
             $(".removedBeloved").click(function (e) {
                 $(this).closest(".row").empty();
                 belovedListManagement();
+                e.preventDefault();
+            }); 
+        }
+        var mementoItemListManagement = function() {
+            $(".addMementoItem").click(function (e) {
+                e.preventDefault();
+                if ($(this).closest(".row").find("input").val() == "") {
+                   $(".missing_memento_data").dialog({
+                    buttons: [
+                      {
+                        text: "Ok",
+                        click: function() {
+                          $( this ).dialog( "close" );
+                        }
+                      }
+                    ]});
+                  return;
+                }
+                var el = $(this).closest(".row").detach();
+                var code = el.find(".actions.add").data("code");
+                el.find(".actions.add").removeClass("add").addClass("removedMementoItem").addClass("delete").after("<input type='hidden' name='memento_item_code[]' value='"+code+"'/>");                
+                $("#memento_item_list").append(el);
+                mementoItemListManagement();
+            });
+            $(".removedMementoItem").click(function (e) {
+                $(this).closest(".row").empty();
+                mementoItemListManagement();
                 e.preventDefault();
             }); 
         }
